@@ -1,18 +1,21 @@
 ---
-# Ansible-lint configuration
-
-# Skip list - only for legitimate exceptions
 skip_list:
-  - role-name[path]  # Allow hyphens in role names (rke2-master is clearer than rke2_master)
+  - role-name[path]
 
-# Use min profile for basic checks
 profile: min
 
-# Exclude certain paths
 exclude_paths:
   - .git/
   - .github/
   - files/
 
-# Note: Install collections to resolve syntax-check warnings:
-# ansible-galaxy collection install -r requirements.yml
+# Tell ansible-lint about our role structure
+mock_roles:
+  - common
+  - storage
+  - rke2-master
+  - rke2-worker
+  - cilium
+  - longhorn
+  - traefik-ingress
+  - test-apps

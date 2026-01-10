@@ -86,7 +86,7 @@
     - name: Set UFW default policy
       community.general.ufw:
         state: enabled
-        policy: "{{ firewall_default_policy }}"
+        policy: "{{ firewall_default_policy | default('deny') }}"
 
 - name: Ensure systemd-timesyncd is running
   ansible.builtin.systemd:
