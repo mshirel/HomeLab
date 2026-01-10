@@ -1,0 +1,78 @@
+# --- OS / Editor junk ---
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# --- Logs & runtime ---
+*.log
+logs/
+tmp/
+.cache/
+.cache/**
+__pycache__/
+*.pyc
+
+# --- Secrets / env ---
+.env
+.env.*
+secrets.*
+*.secret
+*.secrets
+*.vault
+vault.yml
+vault.yaml
+
+# --- SSH / TLS keys ---
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+
+# --- Terraform ---
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+
+# --- Ansible ---
+*.retry
+ansible.cfg
+inventory.ini
+inventory.yaml
+inventory.yml
+group_vars/*/vault.yml
+host_vars/*/vault.yml
+
+# --- Docker / containers ---
+docker-compose.override.yml
+*.env.docker
+
+# --- Traefik / ACME ---
+acme.json
+acme*.json
+
+# --- Backups ---
+*.bak
+*.backup
+*.old
+.backup/
+.backups/
+
+# --- Archives ---
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# --- Local overrides ---
+local.*
+override.*
