@@ -4,9 +4,16 @@
 cilium_version: "1.15.1"
 cilium_namespace: kube-system
 
+# Kubernetes API endpoint
+kube_api_endpoint: "kube01-api.tanx95.us"
+kube_api_port: 6443
+
+# Paths
+kubeconfig_path: /etc/rancher/rke2/rke2.yaml
+
 # Cilium configuration
 cilium_ipv4_enabled: true
 cilium_ipv6_enabled: false
 cilium_tunnel_mode: vxlan
 cilium_enable_hubble: true
-cilium_enable_hubble_ui: false  # Can enable later for web UI
+cilium_enable_hubble_ui: false

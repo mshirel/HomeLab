@@ -4,13 +4,22 @@
 traefik_version: "26.1.0"
 traefik_namespace: traefik
 
+# Paths
+kubeconfig_path: /etc/rancher/rke2/rke2.yaml
+
 # Service configuration
 traefik_service_type: NodePort
+ingress_http_nodeport: 30080
+ingress_https_nodeport: 30443
 
 # DNS-01 challenge configuration
 traefik_dns_provider: cloudflare
-traefik_cloudflare_dns_api_token: "{{ cloudflare_api_token }}"
+traefik_cloudflare_dns_api_token: "{{ cloudflare_api_token | default('') }}"
 
 # Let's Encrypt
-traefik_acme_email: "{{ acme_email }}"
-traefik_acme_server: "{{ acme_server }}"
+traefik_acme_email: "{{ acme_email | default('admin@example.com') }}"
+traefik_acme_server: "https://acme-v02.api.letsencrypt.org/directory"
+
+# Cloudflare token
+cloudflare_api_token: ""
+acme_email: "admin@example.com"

@@ -2,3 +2,14 @@
 # RKE2 Worker defaults
 
 rke2_install_script_url: https://get.rke2.io
+
+# RKE2 channel/version
+rke2_channel: stable
+
+# Paths
+rke2_config_dir: /etc/rancher/rke2
+
+# Worker node labels
+worker_node_labels:
+  node-role.kubernetes.io/worker: "true"
+  storage-node: "true"

@@ -3,6 +3,24 @@
 
 rke2_install_script_url: https://get.rke2.io
 
+# RKE2 channel/version
+rke2_channel: stable
+
+# Cluster configuration
+kube_api_endpoint: "kube01-api.tanx95.us"
+kube_api_port: 6443
+
+# Network Configuration
+pod_cidr: "10.42.0.0/16"
+service_cidr: "10.43.0.0/16"
+cluster_dns: "10.43.0.10"
+
+# Paths
+rke2_config_dir: /etc/rancher/rke2
+rke2_data_dir: /var/lib/rancher/rke2
+kubeconfig_path: /etc/rancher/rke2/rke2.yaml
+local_kubeconfig_path: "~/.kube/kube01-config"
+
 # CNI configuration - we'll install Cilium separately
 rke2_cni: none
 
@@ -17,3 +35,18 @@ disable_components:
 tls_san:
   - "{{ kube_api_endpoint }}"
   - "{{ inventory_hostname }}"
+
+# etcd snapshot configuration
+etcd_snapshot_schedule_cron: "0 */12 * * *"
+etcd_snapshot_retention: 5
+
+# Master tools
+master_tools:
+  - kubectl
+  - helm
+  - k9s
+
+# Master node taints
+taint_masters: true
+master_node_taints:
+  - "node-role.kubernetes.io/control-plane:NoSchedule"

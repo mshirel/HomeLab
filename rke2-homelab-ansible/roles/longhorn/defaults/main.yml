@@ -4,6 +4,9 @@
 longhorn_version: "1.6.0"
 longhorn_namespace: longhorn-system
 
+# Paths
+kubeconfig_path: /etc/rancher/rke2/rke2.yaml
+
 # Storage configuration
 longhorn_default_replica_count: 3
 longhorn_default_data_locality: best-effort
@@ -14,4 +17,5 @@ longhorn_node_selector: "storage-node=true"
 
 # UI configuration
 longhorn_ui_enabled: true
-longhorn_ui_ingress_host: "longhorn.{{ ingress_domain }}"
+longhorn_ui_ingress_host: "longhorn.kube01.tanx95.us"
+ingress_domain: "kube01.tanx95.us"

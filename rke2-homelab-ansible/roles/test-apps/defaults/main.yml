@@ -3,6 +3,12 @@
 
 test_apps_namespace: test-apps
 
+# Paths
+kubeconfig_path: /etc/rancher/rke2/rke2.yaml
+
+# Ingress domain
+ingress_domain: "kube01.tanx95.us"
+
 # Test app 1 - Simple nginx
 nginx_simple_name: nginx-test
 nginx_simple_host: "nginx.{{ ingress_domain }}"
