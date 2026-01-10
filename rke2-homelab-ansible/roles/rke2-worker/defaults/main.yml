@@ -1,0 +1,4 @@
+---
+# RKE2 Worker defaults
+
+rke2_install_script_url: https://get.rke2.io

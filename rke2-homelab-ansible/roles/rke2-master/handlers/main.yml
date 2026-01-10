@@ -1,0 +1,12 @@
+---
+# RKE2 Master handlers
+
+- name: Restart rke2-server
+  ansible.builtin.systemd:
+    name: rke2-server
+    state: restarted
+
+- name: Reload rke2-server
+  ansible.builtin.systemd:
+    name: rke2-server
+    state: reloaded

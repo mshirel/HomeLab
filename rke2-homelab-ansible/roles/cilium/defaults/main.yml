@@ -1,0 +1,12 @@
+---
+# Cilium CNI defaults
+
+cilium_version: "1.15.1"
+cilium_namespace: kube-system
+
+# Cilium configuration
+cilium_ipv4_enabled: true
+cilium_ipv6_enabled: false
+cilium_tunnel_mode: vxlan
+cilium_enable_hubble: true
+cilium_enable_hubble_ui: false  # Can enable later for web UI

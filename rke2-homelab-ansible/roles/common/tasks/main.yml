@@ -1,0 +1,106 @@
+---
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  when: common_update_cache | bool
+
+- name: Upgrade all packages
+  ansible.builtin.apt:
+    upgrade: dist
+    autoremove: true
+    autoclean: true
+  when: common_upgrade_packages | bool
+
+- name: Install base packages
+  ansible.builtin.apt:
+    name: "{{ common_base_packages }}"
+    state: present
+
+- name: Install additional tools
+  ansible.builtin.apt:
+    name: "{{ install_tools }}"
+    state: present
+  when: install_tools is defined
+
+- name: Disable IPv6 via sysctl
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: true
+  loop: "{{ common_sysctl_config | dict2items }}"
+  when:
+    - common_ipv6_disable | bool
+    - "'ipv6' in item.key"
+
+- name: Disable swap
+  ansible.builtin.command: swapoff -a
+  when: common_swap_disable | bool
+  changed_when: false
+
+- name: Remove swap from fstab
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    regexp: '^\s*[^#].*\s+swap\s+'
+    state: absent
+  when: common_swap_disable | bool
+
+- name: Load required kernel modules
+  community.general.modprobe:
+    name: "{{ item }}"
+    state: present
+    persistent: present
+  loop: "{{ common_kernel_modules }}"
+
+- name: Configure sysctl parameters
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: true
+  loop: "{{ common_sysctl_config | dict2items }}"
+  when: "'ipv6' not in item.key or common_ipv6_disable | bool"
+
+- name: Setup UFW firewall
+  when: common_setup_firewall | bool
+  block:
+    - name: Install UFW
+      ansible.builtin.apt:
+        name: ufw
+        state: present
+
+    - name: Allow SSH
+      community.general.ufw:
+        rule: allow
+        port: "{{ common_ssh_port }}"
+        proto: tcp
+
+    - name: Allow all traffic between cluster nodes
+      community.general.ufw:
+        rule: allow
+        from_ip: "{{ hostvars[item].ansible_default_ipv4.address }}"
+      loop: "{{ groups['rke2_cluster'] }}"
+      when: hostvars[item].ansible_default_ipv4.address is defined
+
+    - name: Set UFW default policy
+      community.general.ufw:
+        state: enabled
+        policy: "{{ firewall_default_policy }}"
+
+- name: Ensure systemd-timesyncd is running
+  ansible.builtin.systemd:
+    name: systemd-timesyncd
+    state: started
+    enabled: true
+  when: configure_ntp | default(true) | bool
+
+- name: Check if reboot is required
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+  register: common_reboot_required
+
+- name: Notify if reboot needed
+  ansible.builtin.debug:
+    msg: "WARNING: System reboot required but not performing automatic reboot"
+  when: common_reboot_required.stat.exists

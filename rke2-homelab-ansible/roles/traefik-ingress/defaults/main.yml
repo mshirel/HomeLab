@@ -1,0 +1,16 @@
+---
+# Traefik Ingress Controller defaults
+
+traefik_version: "26.1.0"
+traefik_namespace: traefik
+
+# Service configuration
+traefik_service_type: NodePort
+
+# DNS-01 challenge configuration
+traefik_dns_provider: cloudflare
+traefik_cloudflare_dns_api_token: "{{ cloudflare_api_token }}"
+
+# Let's Encrypt
+traefik_acme_email: "{{ acme_email }}"
+traefik_acme_server: "{{ acme_server }}"

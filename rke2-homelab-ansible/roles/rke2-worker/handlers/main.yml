@@ -1,0 +1,12 @@
+---
+# RKE2 Worker handlers
+
+- name: Restart rke2-agent
+  ansible.builtin.systemd:
+    name: rke2-agent
+    state: restarted
+
+- name: Reload rke2-agent
+  ansible.builtin.systemd:
+    name: rke2-agent
+    state: reloaded

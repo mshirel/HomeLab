@@ -1,0 +1,31 @@
+# RKE2 Server Configuration - First Master
+node-name: {{ inventory_hostname }}
+node-ip: {{ ansible_default_ipv4.address }}
+
+# Cluster configuration
+cluster-cidr: {{ pod_cidr }}
+service-cidr: {{ service_cidr }}
+cluster-dns: {{ cluster_dns }}
+
+# TLS configuration
+tls-san:
+{% for san in tls_san %}
+  - {{ san }}
+{% endfor %}
+
+# CNI configuration
+cni: {{ rke2_cni }}
+
+# Disable default components
+disable:
+{% for component in disable_components %}
+  - {{ component }}
+{% endfor %}
+
+# etcd snapshot configuration
+etcd-snapshot-schedule-cron: "{{ etcd_snapshot_schedule_cron | default('0 */12 * * *') }}"
+etcd-snapshot-retention: {{ etcd_snapshot_retention | default(5) }}
+
+# Kubelet configuration
+kubelet-arg:
+  - "node-ip={{ ansible_default_ipv4.address }}"

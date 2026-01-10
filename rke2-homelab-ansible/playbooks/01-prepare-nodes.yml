@@ -1,0 +1,38 @@
+---
+- name: Prepare all nodes for RKE2 installation
+  hosts: rke2_cluster
+  gather_facts: true
+  become: true
+
+  pre_tasks:
+    - name: Display preparation start message
+      ansible.builtin.debug:
+        msg: "Starting system preparation for {{ inventory_hostname }}"
+
+  roles:
+    - role: common
+      tags: [common, system]
+
+  tasks:
+    - name: Display preparation completion
+      ansible.builtin.debug:
+        msg: "System preparation completed for {{ inventory_hostname }}"
+
+- name: Setup storage on worker nodes
+  hosts: rke2_workers
+  gather_facts: true
+  become: true
+
+  roles:
+    - role: storage
+      tags: [storage]
+
+  tasks:
+    - name: Verify storage mount
+      ansible.builtin.command: df -h {{ storage_mount_point }}
+      register: storage_df
+      changed_when: false
+
+    - name: Display storage information
+      ansible.builtin.debug:
+        msg: "{{ storage_df.stdout_lines }}"

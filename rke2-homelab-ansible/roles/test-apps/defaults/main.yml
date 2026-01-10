@@ -1,0 +1,13 @@
+---
+# Test applications defaults
+
+test_apps_namespace: test-apps
+
+# Test app 1 - Simple nginx
+nginx_simple_name: nginx-test
+nginx_simple_host: "nginx.{{ ingress_domain }}"
+
+# Test app 2 - Nginx with PVC
+nginx_pvc_name: nginx-pvc-test
+nginx_pvc_host: "nginx-pvc.{{ ingress_domain }}"
+nginx_pvc_storage_size: 1Gi

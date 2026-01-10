@@ -1,0 +1,43 @@
+---
+# Common role defaults
+
+# System update
+common_update_cache: true
+common_upgrade_packages: false  # Set to true for full upgrade
+
+# IPv6
+common_ipv6_disable: true
+
+# Swap
+common_swap_disable: true
+
+# Firewall
+common_setup_firewall: true
+common_ssh_port: 22
+
+# Required kernel modules
+common_kernel_modules:
+  - overlay
+  - br_netfilter
+
+# Sysctl parameters
+common_sysctl_config:
+  net.bridge.bridge-nf-call-iptables: 1
+  net.bridge.bridge-nf-call-ip6tables: 1
+  net.ipv4.ip_forward: 1
+  net.ipv6.conf.all.disable_ipv6: 1
+  net.ipv6.conf.default.disable_ipv6: 1
+  net.ipv6.conf.lo.disable_ipv6: 1
+  fs.inotify.max_user_watches: 524288
+  fs.inotify.max_user_instances: 512
+
+# Base packages to install
+common_base_packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
+  - software-properties-common
+  - nfs-common
+  - open-iscsi

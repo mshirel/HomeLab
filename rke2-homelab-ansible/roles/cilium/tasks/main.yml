@@ -1,0 +1,59 @@
+---
+- name: Add Cilium Helm repository
+  kubernetes.core.helm_repository:
+    name: cilium
+    repo_url: https://helm.cilium.io/
+  environment:
+    KUBECONFIG: "{{ kubeconfig_path }}"
+
+- name: Deploy Cilium CNI
+  kubernetes.core.helm:
+    name: cilium
+    chart_ref: cilium/cilium
+    chart_version: "{{ cilium_version }}"
+    release_namespace: "{{ cilium_namespace }}"
+    create_namespace: false
+    values:
+      ipam:
+        mode: kubernetes
+      ipv4:
+        enabled: "{{ cilium_ipv4_enabled }}"
+      ipv6:
+        enabled: "{{ cilium_ipv6_enabled }}"
+      tunnel: "{{ cilium_tunnel_mode }}"
+      hubble:
+        enabled: "{{ cilium_enable_hubble }}"
+        relay:
+          enabled: "{{ cilium_enable_hubble }}"
+        ui:
+          enabled: "{{ cilium_enable_hubble_ui }}"
+      operator:
+        replicas: 2
+      k8sServiceHost: "{{ kube_api_endpoint }}"
+      k8sServicePort: "{{ kube_api_port }}"
+  environment:
+    KUBECONFIG: "{{ kubeconfig_path }}"
+
+- name: Wait for Cilium pods to be ready
+  ansible.builtin.command: >
+    kubectl wait --for=condition=ready pod
+    -l k8s-app=cilium
+    -n {{ cilium_namespace }}
+    --timeout=300s
+  environment:
+    KUBECONFIG: "{{ kubeconfig_path }}"
+  changed_when: false
+
+- name: Verify Cilium status
+  ansible.builtin.shell: |
+    kubectl -n {{ cilium_namespace }} exec -it ds/cilium -- cilium status --brief
+  environment:
+    KUBECONFIG: "{{ kubeconfig_path }}"
+  register: cilium_status
+  changed_when: false
+  failed_when: false
+
+- name: Display Cilium status
+  ansible.builtin.debug:
+    msg: "{{ cilium_status.stdout_lines }}"
+  when: cilium_status.rc == 0

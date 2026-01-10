@@ -1,0 +1,14 @@
+---
+# RKE2 Worker Node Configuration
+
+# Node role
+rke2_type: agent
+
+# Storage configuration
+setup_storage: true
+storage_enabled: true
+
+# Labels for worker nodes
+worker_node_labels:
+  node-role.kubernetes.io/worker: "true"
+  storage-node: "true"

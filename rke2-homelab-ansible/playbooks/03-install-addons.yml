@@ -1,0 +1,91 @@
+---
+- name: Install Kubernetes add-ons and applications
+  hosts: rke2_masters[0]
+  gather_facts: true
+  become: true
+
+  pre_tasks:
+    - name: Display add-on installation start
+      ansible.builtin.debug:
+        msg: "Starting installation of cluster add-ons"
+
+    - name: Verify kubectl is available
+      ansible.builtin.command: kubectl version --client
+      register: kubectl_version
+      changed_when: false
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+
+  roles:
+    - role: cilium
+      tags: [cilium, cni, networking]
+
+    - role: longhorn
+      tags: [longhorn, storage]
+
+    - role: traefik-ingress
+      tags: [traefik, ingress]
+
+    - role: test-apps
+      tags: [test-apps, apps]
+
+  post_tasks:
+    - name: Wait for all pods to be running
+      ansible.builtin.shell: |
+        set -o pipefail
+        kubectl get pods -A --no-headers | grep -v "Running\|Completed" || true
+      args:
+        executable: /bin/bash
+      register: pending_pods
+      until: pending_pods.stdout_lines | length == 0
+      retries: 30
+      delay: 10
+      changed_when: false
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+
+    - name: Get all pods status
+      ansible.builtin.command: kubectl get pods -A -o wide
+      register: all_pods
+      changed_when: false
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+
+    - name: Display all pods
+      ansible.builtin.debug:
+        msg: "{{ all_pods.stdout_lines }}"
+
+    - name: Get ingress resources
+      ansible.builtin.command: kubectl get ingress -A
+      register: ingress_resources
+      changed_when: false
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+
+    - name: Display ingress resources
+      ansible.builtin.debug:
+        msg: "{{ ingress_resources.stdout_lines }}"
+
+    - name: Display access information
+      ansible.builtin.debug:
+        msg: |
+          ========================================
+          Cluster Setup Complete!
+          ========================================
+
+          Longhorn UI: https://longhorn.{{ ingress_domain }}
+          Test App 1:  https://nginx.{{ ingress_domain }}
+          Test App 2:  https://nginx-pvc.{{ ingress_domain }}
+
+          Next steps:
+          1. Configure external Traefik to forward *.{{ ingress_domain }} to workers on ports {{ ingress_http_nodeport }}/{{ ingress_https_nodeport }}
+          2. Verify DNS records for the above domains
+          3. Wait a few minutes for Let's Encrypt certificates to be issued
+          4. Access the applications via HTTPS
+
+          Useful commands:
+          - kubectl get nodes
+          - kubectl get pods -A
+          - kubectl -n kube-system exec -it ds/cilium -- cilium status
+          - hubble observe
+          - k9s (on master nodes)

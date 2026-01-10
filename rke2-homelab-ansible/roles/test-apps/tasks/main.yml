@@ -1,0 +1,58 @@
+---
+- name: Create test apps namespace
+  kubernetes.core.k8s:
+    name: "{{ test_apps_namespace }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+  environment:
+    KUBECONFIG: "{{ kubeconfig_path }}"
+
+- name: Deploy simple nginx test app
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'nginx-simple.yaml.j2') | from_yaml_all }}"
+  environment:
+    KUBECONFIG: "{{ kubeconfig_path }}"
+
+- name: Deploy nginx with PVC test app
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'nginx-pvc.yaml.j2') | from_yaml_all }}"
+  environment:
+    KUBECONFIG: "{{ kubeconfig_path }}"
+
+- name: Wait for test apps to be ready
+  ansible.builtin.command: >
+    kubectl wait --for=condition=ready pod
+    -l app={{ item }}
+    -n {{ test_apps_namespace }}
+    --timeout=300s
+  loop:
+    - "{{ nginx_simple_name }}"
+    - "{{ nginx_pvc_name }}"
+  environment:
+    KUBECONFIG: "{{ kubeconfig_path }}"
+  changed_when: false
+
+- name: Get test app pods
+  ansible.builtin.command: kubectl get pods -n {{ test_apps_namespace }}
+  environment:
+    KUBECONFIG: "{{ kubeconfig_path }}"
+  register: test_pods
+  changed_when: false
+
+- name: Display test app status
+  ansible.builtin.debug:
+    msg: "{{ test_pods.stdout_lines }}"
+
+- name: Get test app ingresses
+  ansible.builtin.command: kubectl get ingress -n {{ test_apps_namespace }}
+  environment:
+    KUBECONFIG: "{{ kubeconfig_path }}"
+  register: test_ingresses
+  changed_when: false
+
+- name: Display test app ingresses
+  ansible.builtin.debug:
+    msg: "{{ test_ingresses.stdout_lines }}"

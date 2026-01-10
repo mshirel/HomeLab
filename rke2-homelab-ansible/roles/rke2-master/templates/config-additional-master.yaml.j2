@@ -1,0 +1,26 @@
+# RKE2 Server Configuration - Additional Master
+node-name: {{ inventory_hostname }}
+node-ip: {{ ansible_default_ipv4.address }}
+
+# Join existing cluster
+server: https://{{ groups['rke2_masters'][0] }}:9345
+token: {{ cluster_token }}
+
+# TLS configuration
+tls-san:
+{% for san in tls_san %}
+  - {{ san }}
+{% endfor %}
+
+# CNI configuration
+cni: {{ rke2_cni }}
+
+# Disable default components
+disable:
+{% for component in disable_components %}
+  - {{ component }}
+{% endfor %}
+
+# Kubelet configuration
+kubelet-arg:
+  - "node-ip={{ ansible_default_ipv4.address }}"

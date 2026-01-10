@@ -1,0 +1,19 @@
+---
+# RKE2 Master defaults
+
+rke2_install_script_url: https://get.rke2.io
+
+# CNI configuration - we'll install Cilium separately
+rke2_cni: none
+
+# Disable components we'll install manually
+disable_components:
+  - rke2-canal
+  - rke2-coredns
+  - rke2-ingress-nginx
+  - rke2-metrics-server
+
+# TLS SANs for API server certificate
+tls_san:
+  - "{{ kube_api_endpoint }}"
+  - "{{ inventory_hostname }}"

@@ -1,0 +1,15 @@
+---
+# Common role handlers
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Reload sysctl
+  ansible.builtin.command: sysctl -p
+  changed_when: false
+
+- name: Reload ufw
+  ansible.builtin.systemd:
+    name: ufw
+    state: reloaded

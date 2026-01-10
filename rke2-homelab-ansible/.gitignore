@@ -1,0 +1,43 @@
+# Ansible
+*.retry
+.ansible/
+/tmp/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+ENV/
+
+# Secrets - NEVER commit these
+*vault-pass*.txt
+*.key
+*.pem
+*secret*
+*token*
+
+# Kubeconfig
+*.kubeconfig
+*-config
+~/.kube/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/

@@ -1,0 +1,11 @@
+---
+# Storage role defaults
+
+# Storage device configuration
+# storage_device: /dev/sdb  # Defined in group_vars
+# storage_mount_point: /var/lib/longhorn  # Defined in group_vars
+# storage_filesystem: xfs  # Defined in group_vars
+
+# Check before formatting
+storage_check_existing_filesystem: true
+storage_force_format: false

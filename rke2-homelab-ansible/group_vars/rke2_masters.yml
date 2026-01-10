@@ -1,0 +1,22 @@
+---
+# RKE2 Master Node Configuration
+
+# Node role
+rke2_type: server
+
+# Taint masters to prevent workload scheduling
+taint_masters: true
+master_node_taints:
+  - "node-role.kubernetes.io/control-plane:NoSchedule"
+
+# etcd snapshot configuration
+etcd_snapshot_schedule_cron: "0 */12 * * *"  # Every 12 hours
+etcd_snapshot_retention: 5
+
+# Control plane resource reservations
+kube_reserved:
+  cpu: "500m"
+  memory: "512Mi"
+system_reserved:
+  cpu: "500m"
+  memory: "512Mi"

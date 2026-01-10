@@ -1,0 +1,78 @@
+---
+# Global Cluster Configuration
+
+# Cluster Identity
+cluster_name: kube01
+cluster_domain: tanx95.us
+cluster_fqdn: "{{ cluster_name }}.{{ cluster_domain }}"
+
+# Kubernetes API Endpoint
+kube_api_endpoint: "kube01-api.{{ cluster_domain }}"
+kube_api_port: 6443
+
+# RKE2 Configuration
+rke2_version: stable
+rke2_channel: stable
+
+# Network Configuration
+pod_cidr: "10.42.0.0/16"
+service_cidr: "10.43.0.0/16"
+cluster_dns: "10.43.0.10"
+
+# Disable IPv6
+disable_ipv6: true
+
+# Firewall Configuration
+firewall_enabled: true
+firewall_default_policy: allow  # Permissive within cluster
+
+# System Configuration
+disable_swap: true
+update_system_packages: true
+
+# Time synchronization
+configure_ntp: true
+
+# Tools to install on all nodes
+install_tools:
+  - curl
+  - wget
+  - git
+  - vim
+  - htop
+  - jq
+  - net-tools
+  - dnsutils
+
+# Tools to install on master nodes
+master_tools:
+  - kubectl
+  - helm
+  - k9s
+
+# Container runtime
+container_runtime: containerd
+
+# Storage Configuration (for Longhorn)
+storage_device: /dev/sdb
+storage_mount_point: /var/lib/longhorn
+storage_filesystem: xfs
+
+# Ingress Configuration
+ingress_domain: "{{ cluster_name }}.{{ cluster_domain }}"
+ingress_http_nodeport: 30080
+ingress_https_nodeport: 30443
+
+# Let's Encrypt Configuration
+acme_email: "{{ lookup('env', 'ACME_EMAIL') | default('admin@' + cluster_domain, true) }}"
+acme_server: "https://acme-v02.api.letsencrypt.org/directory"  # Production
+# acme_server: "https://acme-staging-v02.api.letsencrypt.org/directory"  # Staging for testing
+
+# Cloudflare Configuration (for DNS-01 challenge)
+cloudflare_api_token: "{{ lookup('env', 'CLOUDFLARE_API_TOKEN') }}"
+
+# Paths
+rke2_config_dir: /etc/rancher/rke2
+rke2_data_dir: /var/lib/rancher/rke2
+kubeconfig_path: "{{ rke2_config_dir }}/rke2.yaml"
+local_kubeconfig_path: "~/.kube/{{ cluster_name }}-config"

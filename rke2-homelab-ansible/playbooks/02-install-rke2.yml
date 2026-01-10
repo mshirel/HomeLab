@@ -1,0 +1,133 @@
+---
+- name: Install RKE2 on first master
+  hosts: rke2_masters[0]
+  gather_facts: true
+  become: true
+
+  roles:
+    - role: rke2-master
+      tags: [rke2, master, first-master]
+
+  tasks:
+    - name: Wait for first master to be ready
+      ansible.builtin.wait_for:
+        host: "{{ ansible_default_ipv4.address }}"
+        port: 6443
+        timeout: 300
+
+    - name: Get cluster token
+      ansible.builtin.slurp:
+        src: /var/lib/rancher/rke2/server/node-token
+      register: node_token_raw
+
+    - name: Set cluster token fact
+      ansible.builtin.set_fact:
+        cluster_token: "{{ node_token_raw.content | b64decode | trim }}"
+
+    - name: Display first master status
+      ansible.builtin.debug:
+        msg: "First master {{ inventory_hostname }} is ready"
+
+- name: Install RKE2 on additional masters
+  hosts: rke2_masters[1:]
+  gather_facts: true
+  become: true
+  serial: 1
+
+  pre_tasks:
+    - name: Set cluster token from first master
+      ansible.builtin.set_fact:
+        cluster_token: "{{ hostvars[groups['rke2_masters'][0]]['cluster_token'] }}"
+
+  roles:
+    - role: rke2-master
+      tags: [rke2, master, additional-masters]
+
+  post_tasks:
+    - name: Wait for master to be ready
+      ansible.builtin.wait_for:
+        host: "{{ ansible_default_ipv4.address }}"
+        port: 6443
+        timeout: 300
+
+    - name: Display master status
+      ansible.builtin.debug:
+        msg: "Master {{ inventory_hostname }} joined the cluster"
+
+- name: Install RKE2 on worker nodes
+  hosts: rke2_workers
+  gather_facts: true
+  become: true
+  serial: 2
+
+  pre_tasks:
+    - name: Set cluster token from first master
+      ansible.builtin.set_fact:
+        cluster_token: "{{ hostvars[groups['rke2_masters'][0]]['cluster_token'] }}"
+
+  roles:
+    - role: rke2-worker
+      tags: [rke2, worker]
+
+  post_tasks:
+    - name: Display worker status
+      ansible.builtin.debug:
+        msg: "Worker {{ inventory_hostname }} joined the cluster"
+
+- name: Fetch kubeconfig and verify cluster
+  hosts: rke2_masters[0]
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Fetch kubeconfig to local machine
+      ansible.builtin.fetch:
+        src: "{{ kubeconfig_path }}"
+        dest: "{{ local_kubeconfig_path }}"
+        flat: true
+
+    - name: Replace server address in kubeconfig
+      delegate_to: localhost
+      become: false
+      ansible.builtin.replace:
+        path: "{{ local_kubeconfig_path }}"
+        regexp: 'https://127\.0\.0\.1:6443'
+        replace: "https://{{ kube_api_endpoint }}:{{ kube_api_port }}"
+
+    - name: Set kubeconfig permissions
+      delegate_to: localhost
+      become: false
+      ansible.builtin.file:
+        path: "{{ local_kubeconfig_path }}"
+        mode: '0600'
+
+    - name: Wait for all nodes to be ready
+      ansible.builtin.command: >
+        kubectl get nodes --no-headers
+      register: nodes_status
+      until: nodes_status.stdout_lines | length == groups['rke2_cluster'] | length
+      retries: 30
+      delay: 10
+      changed_when: false
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+
+    - name: Display cluster nodes
+      ansible.builtin.command: kubectl get nodes -o wide
+      register: cluster_nodes
+      changed_when: false
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+
+    - name: Show cluster status
+      ansible.builtin.debug:
+        msg: "{{ cluster_nodes.stdout_lines }}"
+
+    - name: Display kubeconfig location
+      ansible.builtin.debug:
+        msg: |
+          Kubeconfig saved to: {{ local_kubeconfig_path }}
+
+          To use kubectl from your local machine:
+          export KUBECONFIG={{ local_kubeconfig_path }}
+          kubectl get nodes

@@ -1,0 +1,66 @@
+---
+- name: Check if storage device exists
+  ansible.builtin.stat:
+    path: "{{ storage_device }}"
+  register: storage_device_stat
+
+- name: Fail if storage device doesn't exist
+  ansible.builtin.fail:
+    msg: "Storage device {{ storage_device }} not found. Please add the disk to the VM."
+  when: not storage_device_stat.stat.exists
+
+- name: Check if device is already mounted
+  ansible.builtin.command: findmnt -rn -S {{ storage_device }}
+  register: storage_mount_check
+  changed_when: false
+  failed_when: false
+
+- name: Check if device has a filesystem
+  ansible.builtin.command: blkid {{ storage_device }}
+  register: storage_blkid_output
+  changed_when: false
+  failed_when: false
+
+- name: Display device status
+  ansible.builtin.debug:
+    msg: "Device {{ storage_device }} filesystem status: {{ 'formatted' if storage_blkid_output.rc == 0 else 'unformatted' }}"
+
+- name: Create filesystem on storage device
+  community.general.filesystem:
+    fstype: "{{ storage_filesystem }}"
+    dev: "{{ storage_device }}"
+    force: "{{ storage_force_format }}"
+  when:
+    - storage_blkid_output.rc != 0 or storage_force_format
+    - storage_mount_check.rc != 0
+
+- name: Create mount point directory
+  ansible.builtin.file:
+    path: "{{ storage_mount_point }}"
+    state: directory
+    mode: '0755'
+
+- name: Mount storage device
+  ansible.posix.mount:
+    path: "{{ storage_mount_point }}"
+    src: "{{ storage_device }}"
+    fstype: "{{ storage_filesystem }}"
+    state: mounted
+    opts: defaults,noatime
+
+- name: Ensure mount point has correct permissions
+  ansible.builtin.file:
+    path: "{{ storage_mount_point }}"
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Verify mount
+  ansible.builtin.command: df -h {{ storage_mount_point }}
+  register: storage_df_output
+  changed_when: false
+
+- name: Display mount information
+  ansible.builtin.debug:
+    msg: "{{ storage_df_output.stdout_lines }}"
