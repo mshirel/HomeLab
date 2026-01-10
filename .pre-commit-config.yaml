@@ -1,16 +1,26 @@
 ---
 repos:
+  # RKE2 Ansible project
   - repo: local
     hooks:
-      - id: ansible-lint
-        name: Ansible-lint
+      - id: ansible-lint-rke2
+        name: Ansible-lint (rke2-homelab-ansible)
         entry: bash -c 'cd rke2-homelab-ansible && ANSIBLE_CONFIG=./ansible.cfg ansible-lint .'
         language: system
         files: ^rke2-homelab-ansible/.*\.(yaml|yml)$
         pass_filenames: false
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
-    hooks:
-      - id: yamllint
-        args: ['-d', 'relaxed']
+      - id: yamllint-rke2
+        name: yamllint (rke2-homelab-ansible)
+        entry: yamllint -c rke2-homelab-ansible/.yamllint
+        language: system
         files: ^rke2-homelab-ansible/.*\.(yaml|yml)$
+  
+  # Add future projects here:
+  # - repo: local
+  #   hooks:
+  #     - id: ansible-lint-project2
+  #       name: Ansible-lint (project2)
+  #       entry: bash -c 'cd project2 && ansible-lint .'
+  #       language: system
+  #       files: ^project2/.*\.(yaml|yml)$
+  #       pass_filenames: false
