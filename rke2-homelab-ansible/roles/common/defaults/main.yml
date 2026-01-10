@@ -41,3 +41,4 @@ common_base_packages:
   - software-properties-common
   - nfs-common
   - open-iscsi
+  - systemd-timesyncd
