@@ -83,6 +83,18 @@
       loop: "{{ groups['rke2_cluster'] }}"
       when: hostvars[item].ansible_default_ipv4.address is defined
 
+    - name: Allow traffic from workstation VLAN
+      community.general.ufw:
+        rule: allow
+        from_ip: "{{ common_allowed_workstation_network }}"
+      when: common_allowed_workstation_network is defined
+
+    - name: Allow traffic from Traefik LXC container
+      community.general.ufw:
+        rule: allow
+        from_ip: "{{ common_allowed_traefik_ip }}"
+      when: common_allowed_traefik_ip is defined
+
     - name: Set UFW default policy
       community.general.ufw:
         state: enabled

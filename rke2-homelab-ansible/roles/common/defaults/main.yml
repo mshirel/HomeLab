@@ -14,6 +14,8 @@ common_swap_disable: true
 # Firewall
 common_setup_firewall: true
 common_ssh_port: 22
+common_allowed_workstation_network: "10.20.20.0/24"
+common_allowed_traefik_ip: "10.20.111.124"
 
 # Required kernel modules
 common_kernel_modules:

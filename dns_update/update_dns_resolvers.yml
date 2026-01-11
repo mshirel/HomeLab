@@ -1,0 +1,277 @@
+---
+- name: Update DNS resolvers from Pi-hole to UniFi Gateway
+  hosts: all
+  become: true
+  vars:
+    # Old Pi-hole DNS servers to remove
+    old_dns_servers:
+      - "10.20.111.49"
+      - "10.20.10.33"
+      - "10.20.10.34"
+    # New gateway DNS server
+    new_dns_server: "10.20.10.1"
+    # Default search domain
+    search_domain: "tanx95.us"
+    # Set to true to configure systems to use DHCP for DNS instead of static
+    use_dhcp_dns: true
+
+  tasks:
+    - name: Gather facts about the system
+      ansible.builtin.setup:
+
+    # For systems using systemd-resolved (Ubuntu 18.04+, Debian 10+, etc.)
+    - name: Check if systemd-resolved is active
+      ansible.builtin.systemd:
+        name: systemd-resolved
+      register: resolved_status
+      failed_when: false
+
+    - name: Update systemd-resolved configuration (static DNS)
+      ansible.builtin.lineinfile:
+        path: /etc/systemd/resolved.conf
+        regexp: '^DNS='
+        line: "DNS={{ new_dns_server }}"
+        state: present
+      when:
+        - resolved_status.status is defined
+        - resolved_status.status.ActiveState == "active"
+        - not use_dhcp_dns
+      notify: Restart systemd-resolved
+
+    - name: Update systemd-resolved search domain (static DNS)
+      ansible.builtin.lineinfile:
+        path: /etc/systemd/resolved.conf
+        regexp: '^Domains='
+        line: "Domains={{ search_domain }}"
+        state: present
+      when:
+        - resolved_status.status is defined
+        - resolved_status.status.ActiveState == "active"
+        - not use_dhcp_dns
+      notify: Restart systemd-resolved
+
+    - name: Configure systemd-resolved to use DHCP DNS
+      ansible.builtin.lineinfile:
+        path: /etc/systemd/resolved.conf
+        regexp: '^DNS='
+        state: absent
+      when:
+        - resolved_status.status is defined
+        - resolved_status.status.ActiveState == "active"
+        - use_dhcp_dns
+      notify: Restart systemd-resolved
+
+    - name: Configure systemd-resolved to use DHCP search domain
+      ansible.builtin.lineinfile:
+        path: /etc/systemd/resolved.conf
+        regexp: '^Domains='
+        state: absent
+      when:
+        - resolved_status.status is defined
+        - resolved_status.status.ActiveState == "active"
+        - use_dhcp_dns
+      notify: Restart systemd-resolved
+
+    # For systems using /etc/resolv.conf directly
+    - name: Check if resolv.conf is managed by systemd-resolved
+      ansible.builtin.stat:
+        path: /etc/resolv.conf
+      register: resolv_conf
+
+    - name: Backup current resolv.conf
+      ansible.builtin.copy:
+        src: /etc/resolv.conf
+        dest: /etc/resolv.conf.backup.{{ ansible_date_time.epoch }}
+        remote_src: true
+        mode: '0644'
+      when: resolv_conf.stat.exists
+
+    - name: Update /etc/resolv.conf (static DNS) - if not symlinked to systemd
+      ansible.builtin.template:
+        src: resolv.conf.j2
+        dest: /etc/resolv.conf
+        mode: '0644'
+      when:
+        - not use_dhcp_dns
+        - resolv_conf.stat.exists
+        - not resolv_conf.stat.islnk
+
+    # For Debian/Ubuntu systems using resolvconf
+    - name: Check if resolvconf is installed
+      ansible.builtin.stat:
+        path: /etc/resolvconf/resolv.conf.d/base
+      register: resolvconf_base
+
+    - name: Update resolvconf base file (static DNS)
+      ansible.builtin.copy:
+        content: |
+          nameserver {{ new_dns_server }}
+          search {{ search_domain }}
+        dest: /etc/resolvconf/resolv.conf.d/base
+        mode: '0644'
+      when:
+        - resolvconf_base.stat.exists
+        - not use_dhcp_dns
+      notify: Update resolvconf
+
+    - name: Clear resolvconf base file (for DHCP DNS)
+      ansible.builtin.copy:
+        content: ""
+        dest: /etc/resolvconf/resolv.conf.d/base
+        mode: '0644'
+      when:
+        - resolvconf_base.stat.exists
+        - use_dhcp_dns
+      notify: Update resolvconf
+
+    # For RHEL/CentOS/Rocky systems using NetworkManager
+    - name: Get NetworkManager connection names
+      ansible.builtin.command: nmcli -t -f NAME connection show --active
+      register: nm_connections
+      changed_when: false
+      failed_when: false
+      when: ansible_os_family == "RedHat"
+
+    - name: Update NetworkManager connections (static DNS)
+      ansible.builtin.command:
+        cmd: "nmcli connection modify {{ item }} ipv4.dns {{ new_dns_server }} ipv4.dns-search {{ search_domain }} ipv4.ignore-auto-dns yes"
+      loop: "{{ nm_connections.stdout_lines }}"
+      when:
+        - ansible_os_family == "RedHat"
+        - nm_connections.rc == 0
+        - not use_dhcp_dns
+      changed_when: true
+      notify: Restart NetworkManager connections
+
+    - name: Configure NetworkManager to use DHCP DNS
+      ansible.builtin.command:
+        cmd: "nmcli connection modify {{ item }} ipv4.dns '' ipv4.dns-search '' ipv4.ignore-auto-dns no"
+      loop: "{{ nm_connections.stdout_lines }}"
+      when:
+        - ansible_os_family == "RedHat"
+        - nm_connections.rc == 0
+        - use_dhcp_dns
+      changed_when: true
+      notify: Restart NetworkManager connections
+
+    # For Proxmox LXC containers and VMs using /etc/network/interfaces
+    - name: Check if /etc/network/interfaces exists
+      ansible.builtin.stat:
+        path: /etc/network/interfaces
+      register: network_interfaces
+
+    - name: Remove old DNS servers from /etc/network/interfaces
+      ansible.builtin.lineinfile:
+        path: /etc/network/interfaces
+        regexp: '^\s*dns-nameservers.*{{ item }}.*$'
+        state: absent
+      loop: "{{ old_dns_servers }}"
+      when: network_interfaces.stat.exists
+
+    - name: Remove old search domains from /etc/network/interfaces
+      ansible.builtin.lineinfile:
+        path: /etc/network/interfaces
+        regexp: '^\s*dns-search'
+        state: absent
+      when: network_interfaces.stat.exists
+
+    - name: Add new DNS server to /etc/network/interfaces (static)
+      ansible.builtin.lineinfile:
+        path: /etc/network/interfaces
+        regexp: '^\s*dns-nameservers'
+        line: "    dns-nameservers {{ new_dns_server }}"
+        insertafter: '^\s*iface.*inet (static|dhcp)'
+        state: present
+      when:
+        - network_interfaces.stat.exists
+        - not use_dhcp_dns
+      notify: Restart networking
+
+    - name: Add search domain to /etc/network/interfaces (static)
+      ansible.builtin.lineinfile:
+        path: /etc/network/interfaces
+        regexp: '^\s*dns-search'
+        line: "    dns-search {{ search_domain }}"
+        insertafter: '^\s*dns-nameservers'
+        state: present
+      when:
+        - network_interfaces.stat.exists
+        - not use_dhcp_dns
+      notify: Restart networking
+
+    - name: Remove static DNS from /etc/network/interfaces (for DHCP)
+      ansible.builtin.lineinfile:
+        path: /etc/network/interfaces
+        regexp: '^\s*dns-(nameservers|search)'
+        state: absent
+      when:
+        - network_interfaces.stat.exists
+        - use_dhcp_dns
+      notify: Restart networking
+
+    # For systems using netplan (Ubuntu 18.04+)
+    - name: Find netplan configuration files
+      ansible.builtin.find:
+        paths: /etc/netplan
+        patterns: '*.yaml,*.yml'
+      register: netplan_files
+
+    - name: Update netplan files (static DNS)
+      ansible.builtin.replace:
+        path: "{{ item.path }}"
+        regexp: 'nameservers:\s*\n\s*addresses:\s*\[.*\](\s*\n\s*search:\s*\[.*\])?'
+        replace: "nameservers:\n        addresses: [{{ new_dns_server }}]\n        search: [{{ search_domain }}]"
+      loop: "{{ netplan_files.files }}"
+      when:
+        - netplan_files.matched > 0
+        - not use_dhcp_dns
+      notify: Apply netplan
+
+    - name: Remove static DNS from netplan (for DHCP)
+      ansible.builtin.replace:
+        path: "{{ item.path }}"
+        regexp: '^\s*nameservers:.*\n(\s*addresses:.*\n)?(\s*search:.*\n)?'
+        replace: ''
+      loop: "{{ netplan_files.files }}"
+      when:
+        - netplan_files.matched > 0
+        - use_dhcp_dns
+      notify: Apply netplan
+
+    - name: Display DNS configuration status
+      ansible.builtin.debug:
+        msg: |
+          DNS Update Complete:
+          {% if use_dhcp_dns %}
+          - System configured to use DHCP-provided DNS
+          {% else %}
+          - Static DNS set to: {{ new_dns_server }}
+          {% endif %}
+          - Old Pi-hole servers removed: {{ old_dns_servers | join(', ') }}
+
+  handlers:
+    - name: Restart systemd-resolved
+      ansible.builtin.systemd:
+        name: systemd-resolved
+        state: restarted
+
+    - name: Update resolvconf
+      ansible.builtin.command: resolvconf -u
+      changed_when: true
+
+    - name: Restart NetworkManager connections
+      ansible.builtin.shell: |
+        for conn in $(nmcli -t -f NAME connection show --active); do
+          nmcli connection down "$conn" && nmcli connection up "$conn"
+        done
+      changed_when: true
+
+    - name: Restart networking
+      ansible.builtin.systemd:
+        name: networking
+        state: restarted
+      failed_when: false
+
+    - name: Apply netplan
+      ansible.builtin.command: netplan apply
+      changed_when: true
