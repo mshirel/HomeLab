@@ -3,7 +3,7 @@ node-name: {{ inventory_hostname }}
 node-ip: {{ ansible_default_ipv4.address }}
 
 # Join cluster
-server: https://{{ groups['rke2_masters'][0] }}:9345
+server: https://{{ kube_api_endpoint }}:{{ kube_api_port }}
 token: {{ cluster_token }}
 
 # Node labels
