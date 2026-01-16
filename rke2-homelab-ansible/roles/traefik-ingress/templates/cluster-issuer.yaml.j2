@@ -22,4 +22,5 @@ spec:
           cloudflare:
             apiTokenSecretRef:
               name: cloudflare-api-token-secret
+              namespace: {{ traefik_namespace }}
               key: api-token

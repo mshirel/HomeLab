@@ -74,6 +74,17 @@ All critical fixes have been integrated into the Ansible playbooks. You can now 
 
 **Rationale:** Separates the two different ports used by RKE2 for clarity and proper configuration.
 
+### 6. ClusterIssuer Secret Namespace Reference ✅
+
+**Files Modified:**
+- `roles/traefik-ingress/templates/cluster-issuer.yaml.j2`
+
+**Changes:**
+- Added `namespace: {{ traefik_namespace }}` to the `apiTokenSecretRef` in the ClusterIssuer
+- This allows cert-manager to find the Cloudflare API token secret across namespaces
+
+**Rationale:** ClusterIssuers are cluster-scoped resources but reference namespace-scoped secrets. Without specifying the namespace, cert-manager cannot locate the secret, causing all certificate requests to fail with "secret not found" errors.
+
 ## Environment Variables Required
 
 Before running the addons playbook, export these variables:
@@ -88,6 +99,19 @@ These are mapped in `group_vars/all.yml`:
 cloudflare_api_token: "{{ lookup('env', 'CLOUDFLARE_API_TOKEN') }}"
 acme_email: "{{ lookup('env', 'ACME_EMAIL') | default('admin@' + cluster_domain, true) }}"
 ```
+
+**IMPORTANT:** When running the playbook with `--tags`, the `pre_tasks` section is skipped, which means environment variable validation is bypassed. To ensure proper deployment:
+
+- **Correct:** Run without `--tags` or use `--skip-tags` to skip unwanted roles:
+  ```bash
+  ansible-playbook -i inventory/hosts.yml playbooks/03-install-addons.yml --skip-tags cilium,longhorn
+  ```
+
+- **Incorrect:** Using `--tags` skips pre_tasks and environment variable validation:
+  ```bash
+  # This will NOT pick up environment variables!
+  ansible-playbook -i inventory/hosts.yml playbooks/03-install-addons.yml --tags traefik
+  ```
 
 ## Playbook Execution Order
 
@@ -178,6 +202,45 @@ If issues occur during deployment:
 3. **PVCs pending:** Ensure Longhorn CSI driver is registered (`kubectl get csidriver`)
 4. **Traefik pods pending:** Check if PVC is bound (`kubectl get pvc -n traefik`)
 5. **Certificate errors:** Verify ClusterIssuer is Ready and has correct Cloudflare token
+
+### Certificate Issuance Failures
+
+If certificates remain in `READY: False` state and cert-manager logs show "secret not found" errors:
+
+**Symptoms:**
+```bash
+$ kubectl get certificate -A
+NAMESPACE         NAME                 READY   SECRET               AGE
+longhorn-system   longhorn-tls         False   longhorn-tls         14h
+test-apps         nginx-test-tls       False   nginx-test-tls       13h
+```
+
+**Root Cause:** The Cloudflare API token secret is empty because environment variables weren't set when the playbook ran, or `--tags` was used which skipped the pre_tasks section.
+
+**Fix:**
+```bash
+# 1. Set environment variables
+export CLOUDFLARE_API_TOKEN="your_actual_cloudflare_token"
+export ACME_EMAIL="your-email@example.com"
+
+# 2. Re-run the addon playbook WITHOUT using --tags
+ansible-playbook -i inventory/hosts.yml playbooks/03-install-addons.yml \
+  --skip-tags cilium,longhorn \
+  -e "ansible_python_interpreter=/usr/bin/python3"
+
+# 3. Verify the secret now has data
+kubectl get secret cloudflare-api-token-secret -n traefik -o jsonpath='{.data.api-token}' | base64 -d | wc -c
+# Should show a number > 0
+
+# 4. Delete stuck certificate requests to trigger retry
+kubectl delete certificaterequest --all -n test-apps
+kubectl delete certificaterequest --all -n longhorn-system
+
+# 5. Monitor certificate issuance
+watch kubectl get certificate -A
+```
+
+Certificates should transition to `READY: True` within 1-2 minutes once the Cloudflare token is valid.
 
 ## Architecture Notes
 
