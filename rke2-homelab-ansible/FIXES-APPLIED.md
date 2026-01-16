@@ -74,16 +74,18 @@ All critical fixes have been integrated into the Ansible playbooks. You can now 
 
 **Rationale:** Separates the two different ports used by RKE2 for clarity and proper configuration.
 
-### 6. ClusterIssuer Secret Namespace Reference ✅
+### 6. Cloudflare Secret Distribution for cert-manager ✅
 
 **Files Modified:**
 - `roles/traefik-ingress/templates/cluster-issuer.yaml.j2`
+- `roles/traefik-ingress/tasks/main.yml`
 
 **Changes:**
-- Added `namespace: {{ traefik_namespace }}` to the `apiTokenSecretRef` in the ClusterIssuer
-- This allows cert-manager to find the Cloudflare API token secret across namespaces
+- Create Cloudflare API token secret in `cert-manager` namespace (primary location)
+- Added task to copy the secret to all namespaces that request certificates (`longhorn-system`, `test-apps`)
+- Removed unsupported `namespace` field from ClusterIssuer's `apiTokenSecretRef`
 
-**Rationale:** ClusterIssuers are cluster-scoped resources but reference namespace-scoped secrets. Without specifying the namespace, cert-manager cannot locate the secret, causing all certificate requests to fail with "secret not found" errors.
+**Rationale:** When a Certificate resource requests a cert, cert-manager looks for the Cloudflare secret in the **same namespace as the Certificate**, not in a centralized location. ClusterIssuers don't support cross-namespace secret references in older cert-manager versions. The solution is to replicate the secret to each namespace that needs certificates.
 
 ## Environment Variables Required
 
@@ -213,24 +215,34 @@ $ kubectl get certificate -A
 NAMESPACE         NAME                 READY   SECRET               AGE
 longhorn-system   longhorn-tls         False   longhorn-tls         14h
 test-apps         nginx-test-tls       False   nginx-test-tls       13h
+
+$ kubectl describe challenge -n test-apps
+...
+Reason: error getting cloudflare secret: secrets "cloudflare-api-token-secret" not found
 ```
 
-**Root Cause:** The Cloudflare API token secret is empty because environment variables weren't set when the playbook ran, or `--tags` was used which skipped the pre_tasks section.
+**Root Causes:**
+1. The Cloudflare API token secret is empty because environment variables weren't set when the playbook ran
+2. The `--tags` flag was used which skipped the pre_tasks section that validates environment variables
+3. The Cloudflare secret wasn't copied to the namespace where the certificate is being requested
 
-**Fix:**
+**Fix (via Ansible - preferred for clean rebuilds):**
 ```bash
 # 1. Set environment variables
 export CLOUDFLARE_API_TOKEN="your_actual_cloudflare_token"
 export ACME_EMAIL="your-email@example.com"
 
-# 2. Re-run the addon playbook WITHOUT using --tags
+# 2. Re-run the addon playbook WITHOUT using --tags (use --skip-tags instead)
 ansible-playbook -i inventory/hosts.yml playbooks/03-install-addons.yml \
   --skip-tags cilium,longhorn \
   -e "ansible_python_interpreter=/usr/bin/python3"
 
-# 3. Verify the secret now has data
-kubectl get secret cloudflare-api-token-secret -n traefik -o jsonpath='{.data.api-token}' | base64 -d | wc -c
-# Should show a number > 0
+# 3. Verify secrets exist in all necessary namespaces
+for ns in cert-manager longhorn-system test-apps; do
+  echo -n "$ns: "
+  kubectl get secret cloudflare-api-token-secret -n $ns -o jsonpath='{.data.api-token}' 2>/dev/null | base64 -d | wc -c
+done
+# Each should show 40 (or the length of your token)
 
 # 4. Delete stuck certificate requests to trigger retry
 kubectl delete certificaterequest --all -n test-apps
@@ -240,7 +252,26 @@ kubectl delete certificaterequest --all -n longhorn-system
 watch kubectl get certificate -A
 ```
 
-Certificates should transition to `READY: True` within 1-2 minutes once the Cloudflare token is valid.
+**Quick Fix (manual - for existing deployments):**
+```bash
+# Copy the secret from cert-manager to namespaces that need it
+for ns in longhorn-system test-apps; do
+  kubectl get secret cloudflare-api-token-secret -n cert-manager -o yaml | \
+    sed "s/namespace: cert-manager/namespace: $ns/" | \
+    kubectl apply -f -
+done
+
+# Delete stuck certificate requests
+kubectl delete certificaterequest --all -A
+
+# Monitor progress
+watch kubectl get certificate -A
+```
+
+**Expected Timeline:**
+- Certificates transition to `READY: True` within 2-5 minutes after DNS propagation
+- You can monitor DNS-01 challenge progress with: `kubectl describe challenge -n <namespace>`
+- Successful challenges will show: "Waiting for DNS-01 challenge propagation" → "Successfully authorized"
 
 ## Architecture Notes
 

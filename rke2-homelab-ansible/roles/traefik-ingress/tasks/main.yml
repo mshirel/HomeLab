@@ -136,6 +136,25 @@
   environment:
     KUBECONFIG: "{{ kubeconfig_path }}"
 
+- name: Copy Cloudflare secret to namespaces with certificates
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: cloudflare-api-token-secret
+        namespace: "{{ item }}"
+      type: Opaque
+      stringData:
+        api-token: "{{ traefik_cloudflare_dns_api_token }}"
+  loop:
+    - longhorn-system
+    - test-apps
+  environment:
+    KUBECONFIG: "{{ kubeconfig_path }}"
+  when: traefik_cloudflare_dns_api_token | length > 0
+
 - name: Get Traefik service details
   ansible.builtin.command: kubectl get svc -n {{ traefik_namespace }} traefik
   environment:
