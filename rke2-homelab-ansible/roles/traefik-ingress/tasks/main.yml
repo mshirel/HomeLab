@@ -129,10 +129,10 @@
     KUBECONFIG: "{{ kubeconfig_path }}"
   changed_when: false
 
-- name: Deploy cert-manager ClusterIssuer
+- name: Deploy cert-manager ClusterIssuer and Cloudflare secret
   kubernetes.core.k8s:
     state: present
-    definition: "{{ lookup('template', 'cluster-issuer.yaml.j2') | from_yaml }}"
+    definition: "{{ lookup('template', 'cluster-issuer.yaml.j2') | from_yaml_all }}"
   environment:
     KUBECONFIG: "{{ kubeconfig_path }}"
 
