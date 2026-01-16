@@ -1,0 +1,32 @@
+---
+- name: Update worker config to use load balancer
+  hosts: rke2_workers
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: Get current cluster token
+      ansible.builtin.slurp:
+        src: /etc/rancher/rke2/config.yaml
+      register: current_config
+
+    - name: Extract token from current config
+      ansible.builtin.set_fact:
+        cluster_token: "{{ (current_config.content | b64decode | regex_search('token: (.+)', '\\1'))[0] }}"
+
+    - name: Deploy updated RKE2 agent config
+      ansible.builtin.template:
+        src: roles/rke2-worker/templates/config-agent.yaml.j2
+        dest: /etc/rancher/rke2/config.yaml
+        mode: '0600'
+      notify: Restart RKE2 agent
+
+    - name: Display new server endpoint
+      ansible.builtin.debug:
+        msg: "Worker {{ inventory_hostname }} will now use https://{{ kube_api_endpoint | default(groups['rke2_masters'][0]) }}:{{ kube_api_port }}"
+
+  handlers:
+    - name: Restart RKE2 agent
+      ansible.builtin.systemd:
+        name: rke2-agent
+        state: restarted

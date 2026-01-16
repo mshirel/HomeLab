@@ -3,7 +3,8 @@ node-name: {{ inventory_hostname }}
 node-ip: {{ ansible_default_ipv4.address }}
 
 # Join cluster
-server: https://{{ kube_api_endpoint }}:{{ kube_api_port }}
+# Workers must connect directly to the first master, not the load balancer
+server: https://{{ groups['rke2_masters'][0] }}:{{ rke2_supervisor_port | default('9345') }}
 token: {{ cluster_token }}
 
 # Node labels

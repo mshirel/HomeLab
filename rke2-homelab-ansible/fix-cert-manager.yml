@@ -1,0 +1,74 @@
+---
+- name: Fix cert-manager configuration with correct credentials
+  hosts: rke2_masters[0]
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Check if CLOUDFLARE_API_TOKEN is set
+      ansible.builtin.fail:
+        msg: |
+          ERROR: CLOUDFLARE_API_TOKEN environment variable is not set!
+
+          Please set it before running this playbook:
+          export CLOUDFLARE_API_TOKEN="your_cloudflare_token"
+      when: lookup('env', 'CLOUDFLARE_API_TOKEN') | length == 0
+      delegate_to: localhost
+      run_once: true
+
+    - name: Check if ACME_EMAIL is set
+      ansible.builtin.fail:
+        msg: |
+          ERROR: ACME_EMAIL environment variable is not set!
+
+          Please set it before running this playbook:
+          export ACME_EMAIL="your-email@example.com"
+      when: lookup('env', 'ACME_EMAIL') | length == 0
+      delegate_to: localhost
+      run_once: true
+
+    - name: Delete existing ClusterIssuer
+      ansible.builtin.command: kubectl delete clusterissuer letsencrypt-prod --ignore-not-found
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+      changed_when: false
+
+    - name: Delete existing Cloudflare secret in traefik namespace
+      ansible.builtin.command: kubectl delete secret cloudflare-api-token-secret -n traefik --ignore-not-found
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+      changed_when: false
+
+    - name: Delete existing Cloudflare secret (alternative name)
+      ansible.builtin.command: kubectl delete secret cloudflare-api-token -n traefik --ignore-not-found
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+      changed_when: false
+
+    - name: Re-run traefik-ingress role to recreate resources
+      ansible.builtin.include_role:
+        name: traefik-ingress
+        tasks_from: main
+
+    - name: Verify ClusterIssuer was created
+      ansible.builtin.command: kubectl get clusterissuer letsencrypt-prod -o yaml
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+      register: clusterissuer_check
+      changed_when: false
+
+    - name: Display ClusterIssuer
+      ansible.builtin.debug:
+        msg: "{{ clusterissuer_check.stdout_lines }}"
+
+    - name: Check existing certificates
+      ansible.builtin.command: kubectl get certificates -A
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+      register: certs
+      changed_when: false
+      failed_when: false
+
+    - name: Display certificates
+      ansible.builtin.debug:
+        msg: "{{ certs.stdout_lines }}"

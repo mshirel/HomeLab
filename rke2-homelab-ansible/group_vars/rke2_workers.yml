@@ -9,6 +9,6 @@ setup_storage: true
 storage_enabled: true
 
 # Labels for worker nodes
+# Note: Do not set node-role.kubernetes.io/worker - it prevents workers from joining
 worker_node_labels:
-  node-role.kubernetes.io/worker: "true"
   storage-node: "true"

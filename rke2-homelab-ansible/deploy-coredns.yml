@@ -1,113 +1,24 @@
 ---
-- name: Add Cilium Helm repository
-  kubernetes.core.helm_repository:
-    name: cilium
-    repo_url: https://helm.cilium.io/
-  environment:
-    KUBECONFIG: "{{ kubeconfig_path }}"
+- name: Deploy CoreDNS to fix cluster DNS
+  hosts: rke2_masters[0]
+  gather_facts: false
+  become: true
 
-- name: Deploy Cilium CNI
-  kubernetes.core.helm:
-    name: cilium
-    chart_ref: cilium/cilium
-    chart_version: "{{ cilium_version }}"
-    release_namespace: "{{ cilium_namespace }}"
-    create_namespace: false
-    values:
-      ipam:
-        mode: kubernetes
-      ipv4:
-        enabled: "{{ cilium_ipv4_enabled }}"
-      ipv6:
-        enabled: "{{ cilium_ipv6_enabled }}"
-      tunnel: "{{ cilium_tunnel_mode }}"
-      hubble:
-        enabled: "{{ cilium_enable_hubble }}"
-        relay:
-          enabled: "{{ cilium_enable_hubble }}"
-        ui:
-          enabled: "{{ cilium_enable_hubble_ui }}"
-      operator:
-        replicas: 2
-      k8sServiceHost: "{{ kube_api_endpoint }}"
-      k8sServicePort: "{{ kube_api_port }}"
-  environment:
-    KUBECONFIG: "{{ kubeconfig_path }}"
-
-- name: Wait for Cilium pods to be ready
-  ansible.builtin.command: >
-    kubectl wait --for=condition=ready pod
-    -l k8s-app=cilium
-    -n {{ cilium_namespace }}
-    --timeout=300s
-  environment:
-    KUBECONFIG: "{{ kubeconfig_path }}"
-  changed_when: false
-
-- name: Verify Cilium status
-  ansible.builtin.shell: |
-    kubectl -n {{ cilium_namespace }} exec -it ds/cilium -- cilium status --brief
-  environment:
-    KUBECONFIG: "{{ kubeconfig_path }}"
-  register: cilium_status
-  changed_when: false
-  failed_when: false
-
-- name: Display Cilium status
-  ansible.builtin.debug:
-    msg: "{{ cilium_status.stdout_lines }}"
-  when: cilium_status.rc == 0
-
-- name: Deploy CoreDNS (required when rke2-coredns is disabled)
-  block:
-    - name: Create CoreDNS ServiceAccount
-      kubernetes.core.k8s:
-        state: present
-        definition:
-          apiVersion: v1
-          kind: ServiceAccount
-          metadata:
-            name: coredns
-            namespace: kube-system
+  tasks:
+    - name: Check if CoreDNS is already deployed
+      ansible.builtin.command: kubectl get deployment -n kube-system coredns
       environment:
         KUBECONFIG: "{{ kubeconfig_path }}"
+      register: coredns_check
+      failed_when: false
+      changed_when: false
 
-    - name: Create CoreDNS ClusterRole
-      kubernetes.core.k8s:
-        state: present
-        definition:
-          apiVersion: rbac.authorization.k8s.io/v1
-          kind: ClusterRole
-          metadata:
-            name: system:coredns
-          rules:
-            - apiGroups: [""]
-              resources: ["endpoints", "services", "pods", "namespaces"]
-              verbs: ["list", "watch"]
-            - apiGroups: ["discovery.k8s.io"]
-              resources: ["endpointslices"]
-              verbs: ["list", "watch"]
+    - name: Deploy CoreDNS
+      ansible.builtin.shell: |
+        kubectl apply -f https://raw.githubusercontent.com/coredns/deployment/master/kubernetes/coredns.yaml.sed
       environment:
         KUBECONFIG: "{{ kubeconfig_path }}"
-
-    - name: Create CoreDNS ClusterRoleBinding
-      kubernetes.core.k8s:
-        state: present
-        definition:
-          apiVersion: rbac.authorization.k8s.io/v1
-          kind: ClusterRoleBinding
-          metadata:
-            name: system:coredns
-          roleRef:
-            apiGroup: rbac.authorization.k8s.io
-            kind: ClusterRole
-            name: system:coredns
-          subjects:
-            - kind: ServiceAccount
-              name: coredns
-              namespace: kube-system
-      environment:
-        KUBECONFIG: "{{ kubeconfig_path }}"
+      when: coredns_check.rc != 0
 
     - name: Create CoreDNS ConfigMap
       kubernetes.core.k8s:
@@ -159,7 +70,7 @@
           spec:
             selector:
               k8s-app: kube-dns
-            clusterIP: "{{ cluster_dns }}"
+            clusterIP: 10.43.0.10
             ports:
               - name: dns
                 port: 53
@@ -278,6 +189,55 @@
       environment:
         KUBECONFIG: "{{ kubeconfig_path }}"
 
+    - name: Create CoreDNS ServiceAccount
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: ServiceAccount
+          metadata:
+            name: coredns
+            namespace: kube-system
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+
+    - name: Create CoreDNS ClusterRole
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: ClusterRole
+          metadata:
+            name: system:coredns
+          rules:
+            - apiGroups: [""]
+              resources: ["endpoints", "services", "pods", "namespaces"]
+              verbs: ["list", "watch"]
+            - apiGroups: ["discovery.k8s.io"]
+              resources: ["endpointslices"]
+              verbs: ["list", "watch"]
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+
+    - name: Create CoreDNS ClusterRoleBinding
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: ClusterRoleBinding
+          metadata:
+            name: system:coredns
+          roleRef:
+            apiGroup: rbac.authorization.k8s.io
+            kind: ClusterRole
+            name: system:coredns
+          subjects:
+            - kind: ServiceAccount
+              name: coredns
+              namespace: kube-system
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+
     - name: Wait for CoreDNS to be ready
       ansible.builtin.command: >
         kubectl wait --for=condition=ready pod
@@ -287,3 +247,16 @@
       environment:
         KUBECONFIG: "{{ kubeconfig_path }}"
       changed_when: false
+
+    - name: Verify DNS is working
+      ansible.builtin.command: >
+        kubectl run -it --rm debug --image=busybox --restart=Never -- nslookup kubernetes.default
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+      register: dns_test
+      failed_when: false
+      changed_when: false
+
+    - name: Display DNS test result
+      ansible.builtin.debug:
+        msg: "{{ dns_test.stdout_lines }}"

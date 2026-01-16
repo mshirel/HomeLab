@@ -9,7 +9,13 @@ rke2_channel: stable
 # Paths
 rke2_config_dir: /etc/rancher/rke2
 
+# API Endpoint Configuration
+# kube_api_endpoint should be defined in group_vars/all.yml
+# If not defined, template will fall back to first master
+# rke2_supervisor_port is used for agent registration (not kube_api_port)
+rke2_supervisor_port: 9345
+
 # Worker node labels
+# Note: Do not set node-role.kubernetes.io/worker - it prevents workers from joining
 worker_node_labels:
-  node-role.kubernetes.io/worker: "true"
   storage-node: "true"

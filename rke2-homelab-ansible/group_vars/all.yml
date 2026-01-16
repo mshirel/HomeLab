@@ -8,7 +8,8 @@ cluster_fqdn: "{{ cluster_name }}.{{ cluster_domain }}"
 
 # Kubernetes API Endpoint
 kube_api_endpoint: "kube01-api.{{ cluster_domain }}"
-kube_api_port: 6443
+kube_api_port: 6443  # Kubernetes API port (for kubectl)
+rke2_supervisor_port: 9345  # RKE2 supervisor API port (for agent registration)
 
 # RKE2 Configuration
 rke2_version: stable

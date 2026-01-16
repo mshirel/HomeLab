@@ -9,6 +9,44 @@
       ansible.builtin.debug:
         msg: "Starting installation of cluster add-ons"
 
+    - name: Check if CLOUDFLARE_API_TOKEN is set
+      ansible.builtin.fail:
+        msg: |
+          ERROR: CLOUDFLARE_API_TOKEN environment variable is not set!
+
+          Please set it before running this playbook:
+          export CLOUDFLARE_API_TOKEN="your_cloudflare_token"
+      when: lookup('env', 'CLOUDFLARE_API_TOKEN') | length == 0
+      delegate_to: localhost
+      run_once: true
+
+    - name: Check if ACME_EMAIL is set
+      ansible.builtin.fail:
+        msg: |
+          ERROR: ACME_EMAIL environment variable is not set!
+
+          Please set it before running this playbook:
+          export ACME_EMAIL="your-email@example.com"
+      when: lookup('env', 'ACME_EMAIL') | length == 0
+      delegate_to: localhost
+      run_once: true
+
+    - name: Display environment variables status
+      ansible.builtin.debug:
+        msg: |
+          Environment variables verified:
+          - CLOUDFLARE_API_TOKEN: Set ({{ lookup('env', 'CLOUDFLARE_API_TOKEN') | length }} characters)
+          - ACME_EMAIL: {{ lookup('env', 'ACME_EMAIL') }}
+      run_once: true
+
+    - name: Install Python Kubernetes dependencies
+      ansible.builtin.apt:
+        name:
+          - python3-kubernetes
+          - python3-yaml
+        state: present
+        update_cache: true
+
     - name: Verify kubectl is available
       ansible.builtin.command: kubectl version --client
       register: kubectl_version
