@@ -58,7 +58,7 @@
       when:
         - resolved_status.status is defined
         - resolved_status.status.ActiveState == "active"
-        - use_dhcp_dns
+        - use_dhcp_dns | bool
       notify: Restart systemd-resolved
 
     - name: Configure systemd-resolved to use DHCP search domain
@@ -69,7 +69,7 @@
       when:
         - resolved_status.status is defined
         - resolved_status.status.ActiveState == "active"
-        - use_dhcp_dns
+        - use_dhcp_dns | bool
       notify: Restart systemd-resolved
 
     # For systems using /etc/resolv.conf directly
@@ -121,7 +121,7 @@
         mode: '0644'
       when:
         - resolvconf_base.stat.exists
-        - use_dhcp_dns
+        - use_dhcp_dns | bool
       notify: Update resolvconf
 
     # For RHEL/CentOS/Rocky systems using NetworkManager
@@ -150,7 +150,7 @@
       when:
         - ansible_os_family == "RedHat"
         - nm_connections.rc == 0
-        - use_dhcp_dns
+        - use_dhcp_dns | bool
       changed_when: true
       notify: Restart NetworkManager connections
 
@@ -206,7 +206,7 @@
         state: absent
       when:
         - network_interfaces.stat.exists
-        - use_dhcp_dns
+        - use_dhcp_dns | bool
       notify: Restart networking
 
     # For systems using netplan (Ubuntu 18.04+)
@@ -235,7 +235,7 @@
       loop: "{{ netplan_files.files }}"
       when:
         - netplan_files.matched > 0
-        - use_dhcp_dns
+        - use_dhcp_dns | bool
       notify: Apply netplan
 
     - name: Display DNS configuration status
