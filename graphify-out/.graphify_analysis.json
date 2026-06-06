@@ -1,0 +1,233 @@
+{
+  "communities": {
+    "0": [
+      "inventory_hosts_config",
+      "pb_01_prepare_nodes",
+      "pb_02_install_rke2",
+      "pre_commit_config_hooks",
+      "quickstart_doc",
+      "requirements_collections",
+      "rke2_readme_doc",
+      "role_common_defaults",
+      "role_common_handlers",
+      "role_common_tasks",
+      "role_storage_defaults",
+      "role_storage_tasks"
+    ],
+    "1": [
+      "concept_longhorn_storage",
+      "concept_traefik",
+      "fix_cert_manager_playbook",
+      "fixes_applied_doc",
+      "pb_03_install_addons",
+      "role_longhorn_defaults",
+      "role_longhorn_tasks",
+      "role_test_apps_defaults",
+      "role_test_apps_tasks",
+      "role_traefik_tasks"
+    ],
+    "2": [
+      "concept_rke2_cluster",
+      "role_rke2_master_defaults",
+      "role_rke2_master_handlers",
+      "role_rke2_master_tasks",
+      "role_rke2_worker_defaults",
+      "role_rke2_worker_handlers",
+      "role_rke2_worker_tasks",
+      "update_worker_config_playbook"
+    ],
+    "3": [
+      "concept_cert_manager",
+      "concept_cloudflare_dns",
+      "concept_letsencrypt",
+      "group_vars_all_config",
+      "group_vars_rke2_masters_config",
+      "group_vars_rke2_workers_config",
+      "role_traefik_defaults"
+    ],
+    "4": [
+      "concept_cilium_cni",
+      "concept_coredns",
+      "deploy_coredns_playbook",
+      "role_cilium_defaults",
+      "role_cilium_tasks"
+    ],
+    "5": [
+      "claude_settings_local",
+      "claude_settings_local_permissions",
+      "claude_settings_local_permissions_allow"
+    ],
+    "6": [
+      "apply_fixes",
+      "home_matt_projects_homelab_apply_fixes_sh__entry"
+    ],
+    "7": [
+      "dns_update_readme_doc",
+      "update_dns_resolvers_playbook"
+    ],
+    "8": [
+      "home_matt_projects_homelab_setup_rke2_ansible_sh__entry",
+      "setup_rke2_ansible"
+    ],
+    "9": [
+      "complete_setup"
+    ],
+    "10": [
+      "rke2_homelab_ansible_fix_pre_commit_issues"
+    ],
+    "11": [
+      "setup_rke2_ansible_part2"
+    ],
+    "12": [
+      "setup_role_cilium"
+    ],
+    "13": [
+      "setup_role_longhorn"
+    ],
+    "14": [
+      "setup_role_rke2_master"
+    ],
+    "15": [
+      "setup_role_rke2_worker"
+    ],
+    "16": [
+      "setup_role_test_apps"
+    ],
+    "17": [
+      "setup_role_traefik_ingress"
+    ]
+  },
+  "cohesion": {
+    "0": 0.24242424242424243,
+    "1": 0.28888888888888886,
+    "2": 0.25,
+    "3": 0.47619047619047616,
+    "4": 0.6,
+    "5": 0.6666666666666666,
+    "6": 1.0,
+    "7": 1.0,
+    "8": 1.0,
+    "9": 1.0,
+    "10": 1.0,
+    "11": 1.0,
+    "12": 1.0,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0,
+    "17": 1.0
+  },
+  "gods": [
+    {
+      "id": "requirements_collections",
+      "label": "Ansible Collections Requirements",
+      "degree": 9
+    },
+    {
+      "id": "role_traefik_tasks",
+      "label": "Traefik Ingress Role Tasks",
+      "degree": 9
+    },
+    {
+      "id": "group_vars_all_config",
+      "label": "Global Cluster Variables",
+      "degree": 8
+    },
+    {
+      "id": "pb_03_install_addons",
+      "label": "Playbook 03: Install Add-ons",
+      "degree": 8
+    },
+    {
+      "id": "fixes_applied_doc",
+      "label": "Fixes Applied Documentation",
+      "degree": 7
+    },
+    {
+      "id": "role_cilium_tasks",
+      "label": "Cilium Role Tasks",
+      "degree": 7
+    },
+    {
+      "id": "rke2_readme_doc",
+      "label": "RKE2 Homelab README",
+      "degree": 5
+    },
+    {
+      "id": "pb_01_prepare_nodes",
+      "label": "Playbook 01: Prepare Nodes",
+      "degree": 5
+    },
+    {
+      "id": "pb_02_install_rke2",
+      "label": "Playbook 02: Install RKE2",
+      "degree": 5
+    },
+    {
+      "id": "role_longhorn_tasks",
+      "label": "Longhorn Role Tasks",
+      "degree": 5
+    }
+  ],
+  "surprises": [
+    {
+      "source": "Pre-commit Config Hooks",
+      "target": "RKE2 Homelab README",
+      "source_files": [
+        ".pre-commit-config.yaml",
+        "rke2-homelab-ansible/README.md"
+      ],
+      "confidence": "AMBIGUOUS",
+      "relation": "references",
+      "why": "ambiguous connection - not explicitly stated in source; connects across different repos/directories; peripheral node `Pre-commit Config Hooks` unexpectedly reaches hub `RKE2 Homelab README`"
+    },
+    {
+      "source": "Global Cluster Variables",
+      "target": "Cilium Role Defaults",
+      "source_files": [
+        "rke2-homelab-ansible/group_vars/all.yml",
+        "rke2-homelab-ansible/roles/cilium/defaults/main.yml"
+      ],
+      "confidence": "INFERRED",
+      "relation": "shares_data_with",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities; peripheral node `Cilium Role Defaults` unexpectedly reaches hub `Global Cluster Variables`"
+    },
+    {
+      "source": "Global Cluster Variables",
+      "target": "RKE2 Master Role Defaults",
+      "source_files": [
+        "rke2-homelab-ansible/group_vars/all.yml",
+        "rke2-homelab-ansible/roles/rke2-master/defaults/main.yml"
+      ],
+      "confidence": "INFERRED",
+      "relation": "shares_data_with",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities; peripheral node `RKE2 Master Role Defaults` unexpectedly reaches hub `Global Cluster Variables`"
+    },
+    {
+      "source": "Fixes Applied Documentation",
+      "target": "Update Worker Config Playbook",
+      "source_files": [
+        "rke2-homelab-ansible/FIXES-APPLIED.md",
+        "rke2-homelab-ansible/update-worker-config.yml"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "cites",
+      "why": "bridges separate communities; peripheral node `Update Worker Config Playbook` unexpectedly reaches hub `Fixes Applied Documentation`"
+    },
+    {
+      "source": "Global Cluster Variables",
+      "target": "RKE2 Worker Role Defaults",
+      "source_files": [
+        "rke2-homelab-ansible/group_vars/all.yml",
+        "rke2-homelab-ansible/roles/rke2-worker/defaults/main.yml"
+      ],
+      "confidence": "INFERRED",
+      "relation": "shares_data_with",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    }
+  ],
+  "tokens": {
+    "input": 49416,
+    "output": 31198
+  }
+}
