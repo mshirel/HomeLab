@@ -4,31 +4,112 @@
   "graph": {},
   "nodes": [
     {
+      "label": "settings.json",
+      "file_type": "code",
+      "source_file": ".claude/settings.json",
+      "source_location": "L1",
+      "id": "claude_settings",
+      "community": 21,
+      "norm_label": "settings.json"
+    },
+    {
+      "label": "hooks",
+      "file_type": "code",
+      "source_file": ".claude/settings.json",
+      "source_location": "L2",
+      "id": "claude_settings_hooks",
+      "community": 21,
+      "norm_label": "hooks"
+    },
+    {
+      "label": "PreToolUse",
+      "file_type": "code",
+      "source_file": ".claude/settings.json",
+      "source_location": "L3",
+      "id": "claude_settings_hooks_pretooluse",
+      "community": 21,
+      "norm_label": "pretooluse"
+    },
+    {
       "label": "settings.local.json",
       "file_type": "code",
       "source_file": ".claude/settings.local.json",
       "source_location": "L1",
+      "id": "claude_settings_local",
       "community": 5,
-      "norm_label": "settings.local.json",
-      "id": "claude_settings_local"
+      "norm_label": "settings.local.json"
     },
     {
       "label": "permissions",
       "file_type": "code",
       "source_file": ".claude/settings.local.json",
       "source_location": "L2",
+      "id": "claude_settings_local_permissions",
       "community": 5,
-      "norm_label": "permissions",
-      "id": "claude_settings_local_permissions"
+      "norm_label": "permissions"
     },
     {
       "label": "allow",
       "file_type": "code",
       "source_file": ".claude/settings.local.json",
       "source_location": "L3",
+      "id": "claude_settings_local_permissions_allow",
       "community": 5,
-      "norm_label": "allow",
-      "id": "claude_settings_local_permissions_allow"
+      "norm_label": "allow"
+    },
+    {
+      "label": "hooks.json",
+      "file_type": "code",
+      "source_file": ".codex/hooks.json",
+      "source_location": "L1",
+      "id": "codex_hooks",
+      "community": 22,
+      "norm_label": "hooks.json"
+    },
+    {
+      "label": "hooks",
+      "file_type": "code",
+      "source_file": ".codex/hooks.json",
+      "source_location": "L2",
+      "id": "codex_hooks_hooks",
+      "community": 22,
+      "norm_label": "hooks"
+    },
+    {
+      "label": "PreToolUse",
+      "file_type": "code",
+      "source_file": ".codex/hooks.json",
+      "source_location": "L3",
+      "id": "codex_hooks_hooks_pretooluse",
+      "community": 22,
+      "norm_label": "pretooluse"
+    },
+    {
+      "label": "settings.json",
+      "file_type": "code",
+      "source_file": ".gemini/settings.json",
+      "source_location": "L1",
+      "id": "gemini_settings",
+      "community": 23,
+      "norm_label": "settings.json"
+    },
+    {
+      "label": "hooks",
+      "file_type": "code",
+      "source_file": ".gemini/settings.json",
+      "source_location": "L2",
+      "id": "gemini_settings_hooks",
+      "community": 23,
+      "norm_label": "hooks"
+    },
+    {
+      "label": "BeforeTool",
+      "file_type": "code",
+      "source_file": ".gemini/settings.json",
+      "source_location": "L3",
+      "id": "gemini_settings_hooks_beforetool",
+      "community": 23,
+      "norm_label": "beforetool"
     },
     {
       "label": "COMPLETE-SETUP.sh",
@@ -39,9 +120,22 @@
         "language": "bash",
         "kind": "file"
       },
+      "id": "complete_setup",
       "community": 9,
-      "norm_label": "complete-setup.sh",
-      "id": "complete_setup"
+      "norm_label": "complete-setup.sh"
+    },
+    {
+      "label": "COMPLETE-SETUP.sh script",
+      "file_type": "code",
+      "source_file": "COMPLETE-SETUP.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "id": "home_matt_projects_homelab_complete_setup_sh__entry",
+      "community": 9,
+      "norm_label": "complete-setup.sh script"
     },
     {
       "label": "apply-fixes.sh",
@@ -52,9 +146,9 @@
         "language": "bash",
         "kind": "file"
       },
+      "id": "apply_fixes",
       "community": 6,
-      "norm_label": "apply-fixes.sh",
-      "id": "apply_fixes"
+      "norm_label": "apply-fixes.sh"
     },
     {
       "label": "apply-fixes.sh script",
@@ -65,9 +159,9 @@
         "language": "bash",
         "kind": "bash_entrypoint"
       },
+      "id": "home_matt_projects_homelab_apply_fixes_sh__entry",
       "community": 6,
-      "norm_label": "apply-fixes.sh script",
-      "id": "home_matt_projects_homelab_apply_fixes_sh__entry"
+      "norm_label": "apply-fixes.sh script"
     },
     {
       "label": "fix-pre-commit-issues.sh",
@@ -78,9 +172,22 @@
         "language": "bash",
         "kind": "file"
       },
+      "id": "rke2_homelab_ansible_fix_pre_commit_issues",
       "community": 10,
-      "norm_label": "fix-pre-commit-issues.sh",
-      "id": "rke2_homelab_ansible_fix_pre_commit_issues"
+      "norm_label": "fix-pre-commit-issues.sh"
+    },
+    {
+      "label": "fix-pre-commit-issues.sh script",
+      "file_type": "code",
+      "source_file": "rke2-homelab-ansible/fix-pre-commit-issues.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "id": "home_matt_projects_homelab_rke2_homelab_ansible_fix_pre_commit_issues_sh__entry",
+      "community": 10,
+      "norm_label": "fix-pre-commit-issues.sh script"
     },
     {
       "label": "setup-rke2-ansible-part2.sh",
@@ -91,9 +198,22 @@
         "language": "bash",
         "kind": "file"
       },
+      "id": "setup_rke2_ansible_part2",
       "community": 11,
-      "norm_label": "setup-rke2-ansible-part2.sh",
-      "id": "setup_rke2_ansible_part2"
+      "norm_label": "setup-rke2-ansible-part2.sh"
+    },
+    {
+      "label": "setup-rke2-ansible-part2.sh script",
+      "file_type": "code",
+      "source_file": "setup-rke2-ansible-part2.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "id": "home_matt_projects_homelab_setup_rke2_ansible_part2_sh__entry",
+      "community": 11,
+      "norm_label": "setup-rke2-ansible-part2.sh script"
     },
     {
       "label": "setup-rke2-ansible.sh",
@@ -104,9 +224,9 @@
         "language": "bash",
         "kind": "file"
       },
+      "id": "setup_rke2_ansible",
       "community": 8,
-      "norm_label": "setup-rke2-ansible.sh",
-      "id": "setup_rke2_ansible"
+      "norm_label": "setup-rke2-ansible.sh"
     },
     {
       "label": "setup-rke2-ansible.sh script",
@@ -117,9 +237,9 @@
         "language": "bash",
         "kind": "bash_entrypoint"
       },
+      "id": "home_matt_projects_homelab_setup_rke2_ansible_sh__entry",
       "community": 8,
-      "norm_label": "setup-rke2-ansible.sh script",
-      "id": "home_matt_projects_homelab_setup_rke2_ansible_sh__entry"
+      "norm_label": "setup-rke2-ansible.sh script"
     },
     {
       "label": "setup-role-cilium.sh",
@@ -130,9 +250,22 @@
         "language": "bash",
         "kind": "file"
       },
+      "id": "setup_role_cilium",
       "community": 12,
-      "norm_label": "setup-role-cilium.sh",
-      "id": "setup_role_cilium"
+      "norm_label": "setup-role-cilium.sh"
+    },
+    {
+      "label": "setup-role-cilium.sh script",
+      "file_type": "code",
+      "source_file": "setup-role-cilium.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "id": "home_matt_projects_homelab_setup_role_cilium_sh__entry",
+      "community": 12,
+      "norm_label": "setup-role-cilium.sh script"
     },
     {
       "label": "setup-role-longhorn.sh",
@@ -143,9 +276,22 @@
         "language": "bash",
         "kind": "file"
       },
+      "id": "setup_role_longhorn",
       "community": 13,
-      "norm_label": "setup-role-longhorn.sh",
-      "id": "setup_role_longhorn"
+      "norm_label": "setup-role-longhorn.sh"
+    },
+    {
+      "label": "setup-role-longhorn.sh script",
+      "file_type": "code",
+      "source_file": "setup-role-longhorn.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "id": "home_matt_projects_homelab_setup_role_longhorn_sh__entry",
+      "community": 13,
+      "norm_label": "setup-role-longhorn.sh script"
     },
     {
       "label": "setup-role-rke2-master.sh",
@@ -156,9 +302,22 @@
         "language": "bash",
         "kind": "file"
       },
+      "id": "setup_role_rke2_master",
       "community": 14,
-      "norm_label": "setup-role-rke2-master.sh",
-      "id": "setup_role_rke2_master"
+      "norm_label": "setup-role-rke2-master.sh"
+    },
+    {
+      "label": "setup-role-rke2-master.sh script",
+      "file_type": "code",
+      "source_file": "setup-role-rke2-master.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "id": "home_matt_projects_homelab_setup_role_rke2_master_sh__entry",
+      "community": 14,
+      "norm_label": "setup-role-rke2-master.sh script"
     },
     {
       "label": "setup-role-rke2-worker.sh",
@@ -169,9 +328,22 @@
         "language": "bash",
         "kind": "file"
       },
+      "id": "setup_role_rke2_worker",
       "community": 15,
-      "norm_label": "setup-role-rke2-worker.sh",
-      "id": "setup_role_rke2_worker"
+      "norm_label": "setup-role-rke2-worker.sh"
+    },
+    {
+      "label": "setup-role-rke2-worker.sh script",
+      "file_type": "code",
+      "source_file": "setup-role-rke2-worker.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "id": "home_matt_projects_homelab_setup_role_rke2_worker_sh__entry",
+      "community": 15,
+      "norm_label": "setup-role-rke2-worker.sh script"
     },
     {
       "label": "setup-role-test-apps.sh",
@@ -182,9 +354,22 @@
         "language": "bash",
         "kind": "file"
       },
+      "id": "setup_role_test_apps",
       "community": 16,
-      "norm_label": "setup-role-test-apps.sh",
-      "id": "setup_role_test_apps"
+      "norm_label": "setup-role-test-apps.sh"
+    },
+    {
+      "label": "setup-role-test-apps.sh script",
+      "file_type": "code",
+      "source_file": "setup-role-test-apps.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "id": "home_matt_projects_homelab_setup_role_test_apps_sh__entry",
+      "community": 16,
+      "norm_label": "setup-role-test-apps.sh script"
     },
     {
       "label": "setup-role-traefik-ingress.sh",
@@ -195,9 +380,724 @@
         "language": "bash",
         "kind": "file"
       },
+      "id": "setup_role_traefik_ingress",
       "community": 17,
-      "norm_label": "setup-role-traefik-ingress.sh",
-      "id": "setup_role_traefik_ingress"
+      "norm_label": "setup-role-traefik-ingress.sh"
+    },
+    {
+      "label": "setup-role-traefik-ingress.sh script",
+      "file_type": "code",
+      "source_file": "setup-role-traefik-ingress.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "id": "home_matt_projects_homelab_setup_role_traefik_ingress_sh__entry",
+      "community": 17,
+      "norm_label": "setup-role-traefik-ingress.sh script"
+    },
+    {
+      "label": "AGENTS.md",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L1",
+      "id": "agents",
+      "community": 24,
+      "norm_label": "agents.md"
+    },
+    {
+      "label": "graphify",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L1",
+      "id": "agents_graphify",
+      "community": 24,
+      "norm_label": "graphify"
+    },
+    {
+      "label": "CLAUDE.md",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "id": "claude",
+      "community": 25,
+      "norm_label": "claude.md"
+    },
+    {
+      "label": "graphify",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "id": "claude_graphify",
+      "community": 25,
+      "norm_label": "graphify"
+    },
+    {
+      "label": "GEMINI.md",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L1",
+      "id": "gemini",
+      "community": 26,
+      "norm_label": "gemini.md"
+    },
+    {
+      "label": "graphify",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L1",
+      "id": "gemini_graphify",
+      "community": 26,
+      "norm_label": "graphify"
+    },
+    {
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L1",
+      "id": "dns_update_readme",
+      "community": 18,
+      "norm_label": "readme.md"
+    },
+    {
+      "label": "DNS Resolver Update Playbook",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L1",
+      "id": "dns_update_readme_dns_resolver_update_playbook",
+      "community": 18,
+      "norm_label": "dns resolver update playbook"
+    },
+    {
+      "label": "What It Does",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L5",
+      "id": "dns_update_readme_what_it_does",
+      "community": 18,
+      "norm_label": "what it does"
+    },
+    {
+      "label": "Files",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L19",
+      "id": "dns_update_readme_files",
+      "community": 18,
+      "norm_label": "files"
+    },
+    {
+      "label": "Usage",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L25",
+      "id": "dns_update_readme_usage",
+      "community": 18,
+      "norm_label": "usage"
+    },
+    {
+      "label": "Option 1: Update to Static Gateway DNS (10.20.10.1)",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L27",
+      "id": "dns_update_readme_option_1_update_to_static_gateway_dns_10_20_10_1",
+      "community": 18,
+      "norm_label": "option 1: update to static gateway dns (10.20.10.1)"
+    },
+    {
+      "label": "Option 2: Switch to DHCP-Managed DNS (Recommended)",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L33",
+      "id": "dns_update_readme_option_2_switch_to_dhcp_managed_dns_recommended",
+      "community": 18,
+      "norm_label": "option 2: switch to dhcp-managed dns (recommended)"
+    },
+    {
+      "label": "Test on a Single Host First",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L39",
+      "id": "dns_update_readme_test_on_a_single_host_first",
+      "community": 18,
+      "norm_label": "test on a single host first"
+    },
+    {
+      "label": "Check What Would Change (Dry Run)",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L45",
+      "id": "dns_update_readme_check_what_would_change_dry_run",
+      "community": 18,
+      "norm_label": "check what would change (dry run)"
+    },
+    {
+      "label": "Recommendations",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L51",
+      "id": "dns_update_readme_recommendations",
+      "community": 18,
+      "norm_label": "recommendations"
+    },
+    {
+      "label": "For Proxmox Templates",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L53",
+      "id": "dns_update_readme_for_proxmox_templates",
+      "community": 18,
+      "norm_label": "for proxmox templates"
+    },
+    {
+      "label": "For Proxmox LXC/VM Creation",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L69",
+      "id": "dns_update_readme_for_proxmox_lxc_vm_creation",
+      "community": 18,
+      "norm_label": "for proxmox lxc/vm creation"
+    },
+    {
+      "label": "Verifying Changes",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L76",
+      "id": "dns_update_readme_verifying_changes",
+      "community": 18,
+      "norm_label": "verifying changes"
+    },
+    {
+      "label": "Rollback",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L91",
+      "id": "dns_update_readme_rollback",
+      "community": 18,
+      "norm_label": "rollback"
+    },
+    {
+      "label": "Customization",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L100",
+      "id": "dns_update_readme_customization",
+      "community": 18,
+      "norm_label": "customization"
+    },
+    {
+      "label": "Notes",
+      "file_type": "document",
+      "source_file": "dns_update/README.md",
+      "source_location": "L115",
+      "id": "dns_update_readme_notes",
+      "community": 18,
+      "norm_label": "notes"
+    },
+    {
+      "label": "FIXES-APPLIED.md",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L1",
+      "id": "rke2_homelab_ansible_fixes_applied",
+      "community": 2,
+      "norm_label": "fixes-applied.md"
+    },
+    {
+      "label": "Fixes Applied to RKE2 HomeLab Ansible",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L1",
+      "id": "rke2_homelab_ansible_fixes_applied_fixes_applied_to_rke2_homelab_ansible",
+      "community": 2,
+      "norm_label": "fixes applied to rke2 homelab ansible"
+    },
+    {
+      "label": "Summary",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L5",
+      "id": "rke2_homelab_ansible_fixes_applied_summary",
+      "community": 2,
+      "norm_label": "summary"
+    },
+    {
+      "label": "Fixes Applied",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L9",
+      "id": "rke2_homelab_ansible_fixes_applied_fixes_applied",
+      "community": 2,
+      "norm_label": "fixes applied"
+    },
+    {
+      "label": "1. Worker Configuration \u2705",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L11",
+      "id": "rke2_homelab_ansible_fixes_applied_1_worker_configuration",
+      "community": 2,
+      "norm_label": "1. worker configuration \u2705"
+    },
+    {
+      "label": "2. CoreDNS Deployment \u2705",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L27",
+      "id": "rke2_homelab_ansible_fixes_applied_2_coredns_deployment",
+      "community": 2,
+      "norm_label": "2. coredns deployment \u2705"
+    },
+    {
+      "label": "3. Environment Variable Validation \u2705",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L42",
+      "id": "rke2_homelab_ansible_fixes_applied_3_environment_variable_validation",
+      "community": 2,
+      "norm_label": "3. environment variable validation \u2705"
+    },
+    {
+      "label": "4. Python Dependencies \u2705",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L54",
+      "id": "rke2_homelab_ansible_fixes_applied_4_python_dependencies",
+      "community": 2,
+      "norm_label": "4. python dependencies \u2705"
+    },
+    {
+      "label": "5. API Endpoint Configuration \u2705",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L65",
+      "id": "rke2_homelab_ansible_fixes_applied_5_api_endpoint_configuration",
+      "community": 2,
+      "norm_label": "5. api endpoint configuration \u2705"
+    },
+    {
+      "label": "6. Cloudflare Secret Distribution for cert-manager \u2705",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L77",
+      "id": "rke2_homelab_ansible_fixes_applied_6_cloudflare_secret_distribution_for_cert_manager",
+      "community": 2,
+      "norm_label": "6. cloudflare secret distribution for cert-manager \u2705"
+    },
+    {
+      "label": "Environment Variables Required",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L90",
+      "id": "rke2_homelab_ansible_fixes_applied_environment_variables_required",
+      "community": 2,
+      "norm_label": "environment variables required"
+    },
+    {
+      "label": "Playbook Execution Order",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L118",
+      "id": "rke2_homelab_ansible_fixes_applied_playbook_execution_order",
+      "community": 2,
+      "norm_label": "playbook execution order"
+    },
+    {
+      "label": "What Gets Deployed",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L139",
+      "id": "rke2_homelab_ansible_fixes_applied_what_gets_deployed",
+      "community": 2,
+      "norm_label": "what gets deployed"
+    },
+    {
+      "label": "Known Configuration",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L152",
+      "id": "rke2_homelab_ansible_fixes_applied_known_configuration",
+      "community": 2,
+      "norm_label": "known configuration"
+    },
+    {
+      "label": "Temporary Files (Can be Deleted)",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L161",
+      "id": "rke2_homelab_ansible_fixes_applied_temporary_files_can_be_deleted",
+      "community": 2,
+      "norm_label": "temporary files (can be deleted)"
+    },
+    {
+      "label": "Verification Commands",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L171",
+      "id": "rke2_homelab_ansible_fixes_applied_verification_commands",
+      "community": 2,
+      "norm_label": "verification commands"
+    },
+    {
+      "label": "Troubleshooting",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L198",
+      "id": "rke2_homelab_ansible_fixes_applied_troubleshooting",
+      "community": 2,
+      "norm_label": "troubleshooting"
+    },
+    {
+      "label": "Certificate Issuance Failures",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L208",
+      "id": "rke2_homelab_ansible_fixes_applied_certificate_issuance_failures",
+      "community": 2,
+      "norm_label": "certificate issuance failures"
+    },
+    {
+      "label": "Architecture Notes",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L276",
+      "id": "rke2_homelab_ansible_fixes_applied_architecture_notes",
+      "community": 2,
+      "norm_label": "architecture notes"
+    },
+    {
+      "label": "QUICKSTART.md",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L1",
+      "id": "rke2_homelab_ansible_quickstart",
+      "community": 19,
+      "norm_label": "quickstart.md"
+    },
+    {
+      "label": "Quick Start Guide",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L1",
+      "id": "rke2_homelab_ansible_quickstart_quick_start_guide",
+      "community": 19,
+      "norm_label": "quick start guide"
+    },
+    {
+      "label": "Installation Steps",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L3",
+      "id": "rke2_homelab_ansible_quickstart_installation_steps",
+      "community": 19,
+      "norm_label": "installation steps"
+    },
+    {
+      "label": "1. Prepare VMs",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L5",
+      "id": "rke2_homelab_ansible_quickstart_1_prepare_vms",
+      "community": 19,
+      "norm_label": "1. prepare vms"
+    },
+    {
+      "label": "2. Setup Control Machine",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L24",
+      "id": "rke2_homelab_ansible_quickstart_2_setup_control_machine",
+      "community": 19,
+      "norm_label": "2. setup control machine"
+    },
+    {
+      "label": "3. Set Environment Variables",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L32",
+      "id": "rke2_homelab_ansible_quickstart_3_set_environment_variables",
+      "community": 19,
+      "norm_label": "3. set environment variables"
+    },
+    {
+      "label": "4. Test Connectivity",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L39",
+      "id": "rke2_homelab_ansible_quickstart_4_test_connectivity",
+      "community": 19,
+      "norm_label": "4. test connectivity"
+    },
+    {
+      "label": "5. Run Playbooks",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L45",
+      "id": "rke2_homelab_ansible_quickstart_5_run_playbooks",
+      "community": 19,
+      "norm_label": "5. run playbooks"
+    },
+    {
+      "label": "6. Configure External Traefik",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L58",
+      "id": "rke2_homelab_ansible_quickstart_6_configure_external_traefik",
+      "community": 19,
+      "norm_label": "6. configure external traefik"
+    },
+    {
+      "label": "7. Access Cluster",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L65",
+      "id": "rke2_homelab_ansible_quickstart_7_access_cluster",
+      "community": 19,
+      "norm_label": "7. access cluster"
+    },
+    {
+      "label": "Common Commands",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L76",
+      "id": "rke2_homelab_ansible_quickstart_common_commands",
+      "community": 19,
+      "norm_label": "common commands"
+    },
+    {
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L1",
+      "id": "rke2_homelab_ansible_readme",
+      "community": 1,
+      "norm_label": "readme.md"
+    },
+    {
+      "label": "RKE2 Homelab Kubernetes Cluster",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L1",
+      "id": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "community": 1,
+      "norm_label": "rke2 homelab kubernetes cluster"
+    },
+    {
+      "label": "Quick Start",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L5",
+      "id": "rke2_homelab_ansible_readme_quick_start",
+      "community": 1,
+      "norm_label": "quick start"
+    },
+    {
+      "label": "Architecture",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L9",
+      "id": "rke2_homelab_ansible_readme_architecture",
+      "community": 1,
+      "norm_label": "architecture"
+    },
+    {
+      "label": "Components",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L17",
+      "id": "rke2_homelab_ansible_readme_components",
+      "community": 1,
+      "norm_label": "components"
+    },
+    {
+      "label": "Prerequisites",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L25",
+      "id": "rke2_homelab_ansible_readme_prerequisites",
+      "community": 1,
+      "norm_label": "prerequisites"
+    },
+    {
+      "label": "Installation",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L34",
+      "id": "rke2_homelab_ansible_readme_installation",
+      "community": 1,
+      "norm_label": "installation"
+    },
+    {
+      "label": "Post-Installation",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L51",
+      "id": "rke2_homelab_ansible_readme_post_installation",
+      "community": 1,
+      "norm_label": "post-installation"
+    },
+    {
+      "label": "Access Your Cluster",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L57",
+      "id": "rke2_homelab_ansible_readme_access_your_cluster",
+      "community": 1,
+      "norm_label": "access your cluster"
+    },
+    {
+      "label": "Configuration",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L68",
+      "id": "rke2_homelab_ansible_readme_configuration",
+      "community": 1,
+      "norm_label": "configuration"
+    },
+    {
+      "label": "Documentation",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L75",
+      "id": "rke2_homelab_ansible_readme_documentation",
+      "community": 1,
+      "norm_label": "documentation"
+    },
+    {
+      "label": "Network Configuration",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L81",
+      "id": "rke2_homelab_ansible_readme_network_configuration",
+      "community": 1,
+      "norm_label": "network configuration"
+    },
+    {
+      "label": "Storage",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L88",
+      "id": "rke2_homelab_ansible_readme_storage",
+      "community": 1,
+      "norm_label": "storage"
+    },
+    {
+      "label": "Security",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L95",
+      "id": "rke2_homelab_ansible_readme_security",
+      "community": 1,
+      "norm_label": "security"
+    },
+    {
+      "label": "Troubleshooting",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L103",
+      "id": "rke2_homelab_ansible_readme_troubleshooting",
+      "community": 20,
+      "norm_label": "troubleshooting"
+    },
+    {
+      "label": "Nodes Not Ready",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L105",
+      "id": "rke2_homelab_ansible_readme_nodes_not_ready",
+      "community": 20,
+      "norm_label": "nodes not ready"
+    },
+    {
+      "label": "Pods Not Starting",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L112",
+      "id": "rke2_homelab_ansible_readme_pods_not_starting",
+      "community": 20,
+      "norm_label": "pods not starting"
+    },
+    {
+      "label": "Cilium Issues",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L119",
+      "id": "rke2_homelab_ansible_readme_cilium_issues",
+      "community": 20,
+      "norm_label": "cilium issues"
+    },
+    {
+      "label": "Storage Problems",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L125",
+      "id": "rke2_homelab_ansible_readme_storage_problems",
+      "community": 20,
+      "norm_label": "storage problems"
+    },
+    {
+      "label": "Maintenance",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L131",
+      "id": "rke2_homelab_ansible_readme_maintenance",
+      "community": 1,
+      "norm_label": "maintenance"
+    },
+    {
+      "label": "Backup etcd",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L133",
+      "id": "rke2_homelab_ansible_readme_backup_etcd",
+      "community": 1,
+      "norm_label": "backup etcd"
+    },
+    {
+      "label": "Upgrade RKE2",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L139",
+      "id": "rke2_homelab_ansible_readme_upgrade_rke2",
+      "community": 1,
+      "norm_label": "upgrade rke2"
+    },
+    {
+      "label": "Project Structure",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L145",
+      "id": "rke2_homelab_ansible_readme_project_structure",
+      "community": 1,
+      "norm_label": "project structure"
+    },
+    {
+      "label": "Learning Resources",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L168",
+      "id": "rke2_homelab_ansible_readme_learning_resources",
+      "community": 1,
+      "norm_label": "learning resources"
+    },
+    {
+      "label": "License",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L175",
+      "id": "rke2_homelab_ansible_readme_license",
+      "community": 1,
+      "norm_label": "license"
+    },
+    {
+      "label": "Support",
+      "file_type": "document",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L179",
+      "id": "rke2_homelab_ansible_readme_support",
+      "community": 1,
+      "norm_label": "support"
     },
     {
       "label": "Pre-commit Config Hooks",
@@ -247,7 +1147,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 4,
       "norm_label": "fixes applied documentation",
       "id": "fixes_applied_doc"
     },
@@ -299,7 +1199,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 0,
       "norm_label": "fix cert-manager playbook",
       "id": "fix_cert_manager_playbook"
     },
@@ -325,7 +1225,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 4,
       "norm_label": "update worker config playbook",
       "id": "update_worker_config_playbook"
     },
@@ -416,7 +1316,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 0,
       "norm_label": "playbook 03: install add-ons",
       "id": "pb_03_install_addons"
     },
@@ -494,7 +1394,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 0,
       "norm_label": "longhorn role defaults",
       "id": "role_longhorn_defaults"
     },
@@ -507,7 +1407,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 0,
       "norm_label": "longhorn role tasks",
       "id": "role_longhorn_tasks"
     },
@@ -520,7 +1420,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "rke2 master role defaults",
       "id": "role_rke2_master_defaults"
     },
@@ -533,7 +1433,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "rke2 master role handlers",
       "id": "role_rke2_master_handlers"
     },
@@ -546,7 +1446,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "rke2 master role tasks",
       "id": "role_rke2_master_tasks"
     },
@@ -559,7 +1459,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 4,
       "norm_label": "rke2 worker role defaults",
       "id": "role_rke2_worker_defaults"
     },
@@ -572,7 +1472,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 4,
       "norm_label": "rke2 worker role handlers",
       "id": "role_rke2_worker_handlers"
     },
@@ -585,7 +1485,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 4,
       "norm_label": "rke2 worker role tasks",
       "id": "role_rke2_worker_tasks"
     },
@@ -624,7 +1524,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 0,
       "norm_label": "test apps role defaults",
       "id": "role_test_apps_defaults"
     },
@@ -637,7 +1537,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 0,
       "norm_label": "test apps role tasks",
       "id": "role_test_apps_tasks"
     },
@@ -663,7 +1563,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 0,
       "norm_label": "traefik ingress role tasks",
       "id": "role_traefik_tasks"
     },
@@ -676,7 +1576,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "rke2 kubernetes cluster",
       "id": "concept_rke2_cluster"
     },
@@ -715,7 +1615,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 0,
       "norm_label": "longhorn distributed storage",
       "id": "concept_longhorn_storage"
     },
@@ -728,7 +1628,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 0,
       "norm_label": "traefik ingress controller",
       "id": "concept_traefik"
     },
@@ -776,6 +1676,26 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": ".claude/settings.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "claude_settings",
+      "target": "claude_settings_hooks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".claude/settings.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "claude_settings_hooks",
+      "target": "claude_settings_hooks_pretooluse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": ".claude/settings.local.json",
       "source_location": "L2",
       "weight": 1.0,
@@ -796,6 +1716,56 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": ".codex/hooks.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "codex_hooks",
+      "target": "codex_hooks_hooks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".codex/hooks.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "codex_hooks_hooks",
+      "target": "codex_hooks_hooks_pretooluse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".gemini/settings.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "gemini_settings",
+      "target": "gemini_settings_hooks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".gemini/settings.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "gemini_settings_hooks",
+      "target": "gemini_settings_hooks_beforetool",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "COMPLETE-SETUP.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "complete_setup",
+      "target": "home_matt_projects_homelab_complete_setup_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "apply-fixes.sh",
       "source_location": "L1",
       "weight": 1.0,
@@ -806,12 +1776,802 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/fix-pre-commit-issues.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fix_pre_commit_issues",
+      "target": "home_matt_projects_homelab_rke2_homelab_ansible_fix_pre_commit_issues_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "setup-rke2-ansible-part2.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "setup_rke2_ansible_part2",
+      "target": "home_matt_projects_homelab_setup_rke2_ansible_part2_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "setup-rke2-ansible.sh",
       "source_location": "L1",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "setup_rke2_ansible",
       "target": "home_matt_projects_homelab_setup_rke2_ansible_sh__entry"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "setup-role-cilium.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "setup_role_cilium",
+      "target": "home_matt_projects_homelab_setup_role_cilium_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "setup-role-longhorn.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "setup_role_longhorn",
+      "target": "home_matt_projects_homelab_setup_role_longhorn_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "setup-role-rke2-master.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "setup_role_rke2_master",
+      "target": "home_matt_projects_homelab_setup_role_rke2_master_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "setup-role-rke2-worker.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "setup_role_rke2_worker",
+      "target": "home_matt_projects_homelab_setup_role_rke2_worker_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "setup-role-test-apps.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "setup_role_test_apps",
+      "target": "home_matt_projects_homelab_setup_role_test_apps_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "setup-role-traefik-ingress.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "setup_role_traefik_ingress",
+      "target": "home_matt_projects_homelab_setup_role_traefik_ingress_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "agents",
+      "target": "agents_graphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "claude",
+      "target": "claude_graphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "gemini",
+      "target": "gemini_graphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "dns_update_readme",
+      "target": "dns_update_readme_dns_resolver_update_playbook",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "dns_update_readme_dns_resolver_update_playbook",
+      "target": "dns_update_readme_customization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "dns_update_readme_dns_resolver_update_playbook",
+      "target": "dns_update_readme_files",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L115",
+      "weight": 1.0,
+      "source": "dns_update_readme_dns_resolver_update_playbook",
+      "target": "dns_update_readme_notes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "dns_update_readme_dns_resolver_update_playbook",
+      "target": "dns_update_readme_recommendations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "dns_update_readme_dns_resolver_update_playbook",
+      "target": "dns_update_readme_rollback",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "dns_update_readme_dns_resolver_update_playbook",
+      "target": "dns_update_readme_usage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "dns_update_readme_dns_resolver_update_playbook",
+      "target": "dns_update_readme_verifying_changes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "dns_update_readme_dns_resolver_update_playbook",
+      "target": "dns_update_readme_what_it_does",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "dns_update_readme_usage",
+      "target": "dns_update_readme_check_what_would_change_dry_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "dns_update_readme_usage",
+      "target": "dns_update_readme_option_1_update_to_static_gateway_dns_10_20_10_1",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "dns_update_readme_usage",
+      "target": "dns_update_readme_option_2_switch_to_dhcp_managed_dns_recommended",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "dns_update_readme_usage",
+      "target": "dns_update_readme_test_on_a_single_host_first",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "dns_update_readme_recommendations",
+      "target": "dns_update_readme_for_proxmox_lxc_vm_creation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "dns_update/README.md",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "dns_update_readme_recommendations",
+      "target": "dns_update_readme_for_proxmox_templates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied",
+      "target": "rke2_homelab_ansible_fixes_applied_fixes_applied_to_rke2_homelab_ansible",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L276",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied_to_rke2_homelab_ansible",
+      "target": "rke2_homelab_ansible_fixes_applied_architecture_notes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied_to_rke2_homelab_ansible",
+      "target": "rke2_homelab_ansible_fixes_applied_environment_variables_required",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied_to_rke2_homelab_ansible",
+      "target": "rke2_homelab_ansible_fixes_applied_fixes_applied",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L152",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied_to_rke2_homelab_ansible",
+      "target": "rke2_homelab_ansible_fixes_applied_known_configuration",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L118",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied_to_rke2_homelab_ansible",
+      "target": "rke2_homelab_ansible_fixes_applied_playbook_execution_order",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied_to_rke2_homelab_ansible",
+      "target": "rke2_homelab_ansible_fixes_applied_summary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L161",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied_to_rke2_homelab_ansible",
+      "target": "rke2_homelab_ansible_fixes_applied_temporary_files_can_be_deleted",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L198",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied_to_rke2_homelab_ansible",
+      "target": "rke2_homelab_ansible_fixes_applied_troubleshooting",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L171",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied_to_rke2_homelab_ansible",
+      "target": "rke2_homelab_ansible_fixes_applied_verification_commands",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L139",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied_to_rke2_homelab_ansible",
+      "target": "rke2_homelab_ansible_fixes_applied_what_gets_deployed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied",
+      "target": "rke2_homelab_ansible_fixes_applied_1_worker_configuration",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied",
+      "target": "rke2_homelab_ansible_fixes_applied_2_coredns_deployment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied",
+      "target": "rke2_homelab_ansible_fixes_applied_3_environment_variable_validation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied",
+      "target": "rke2_homelab_ansible_fixes_applied_4_python_dependencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied",
+      "target": "rke2_homelab_ansible_fixes_applied_5_api_endpoint_configuration",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_fixes_applied",
+      "target": "rke2_homelab_ansible_fixes_applied_6_cloudflare_secret_distribution_for_cert_manager",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/FIXES-APPLIED.md",
+      "source_location": "L208",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_fixes_applied_troubleshooting",
+      "target": "rke2_homelab_ansible_fixes_applied_certificate_issuance_failures",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_quickstart",
+      "target": "rke2_homelab_ansible_quickstart_quick_start_guide",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_quickstart_quick_start_guide",
+      "target": "rke2_homelab_ansible_quickstart_common_commands",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_quickstart_quick_start_guide",
+      "target": "rke2_homelab_ansible_quickstart_installation_steps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_quickstart_installation_steps",
+      "target": "rke2_homelab_ansible_quickstart_1_prepare_vms",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_quickstart_installation_steps",
+      "target": "rke2_homelab_ansible_quickstart_2_setup_control_machine",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_quickstart_installation_steps",
+      "target": "rke2_homelab_ansible_quickstart_3_set_environment_variables",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_quickstart_installation_steps",
+      "target": "rke2_homelab_ansible_quickstart_4_test_connectivity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_quickstart_installation_steps",
+      "target": "rke2_homelab_ansible_quickstart_5_run_playbooks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_quickstart_installation_steps",
+      "target": "rke2_homelab_ansible_quickstart_6_configure_external_traefik",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/QUICKSTART.md",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_quickstart_installation_steps",
+      "target": "rke2_homelab_ansible_quickstart_7_access_cluster",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme",
+      "target": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_access_your_cluster",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_architecture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_components",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_configuration",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_documentation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_installation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L168",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_learning_resources",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L175",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_license",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L131",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_maintenance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_network_configuration",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_post_installation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_prerequisites",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L145",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_project_structure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_quick_start",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L95",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_security",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L88",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_storage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L179",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_support",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L103",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_rke2_homelab_kubernetes_cluster",
+      "target": "rke2_homelab_ansible_readme_troubleshooting",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L119",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_troubleshooting",
+      "target": "rke2_homelab_ansible_readme_cilium_issues",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_troubleshooting",
+      "target": "rke2_homelab_ansible_readme_nodes_not_ready",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_troubleshooting",
+      "target": "rke2_homelab_ansible_readme_pods_not_starting",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L125",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_troubleshooting",
+      "target": "rke2_homelab_ansible_readme_storage_problems",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L133",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_maintenance",
+      "target": "rke2_homelab_ansible_readme_backup_etcd",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "rke2-homelab-ansible/README.md",
+      "source_location": "L139",
+      "weight": 1.0,
+      "source": "rke2_homelab_ansible_readme_maintenance",
+      "target": "rke2_homelab_ansible_readme_upgrade_rke2",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -1545,5 +3305,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "9afef9eeca925f970c06d238bf039b6ca7df24e0"
+  "built_at_commit": "3def92a04146c94f9301b1b9a3d049a18a82d715"
 }
